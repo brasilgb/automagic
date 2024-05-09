@@ -1,5 +1,6 @@
 import { AddButton, DeleteButton, EditButton } from "@/Components/Buttons"
 import { Card, CardBody, CardContainer, CardFooter, CardHeader, CardHeaderContent } from "@/Components/Card"
+import Filiais from "@/Components/Empresas/Filiais"
 import FlashMessage from "@/Components/FlashMessage"
 import InputSearch from "@/Components/InputSearch"
 import { BreadCrumbTop, HeaderContent, TitleTop } from "@/Components/PageTop"
@@ -50,7 +51,7 @@ const Company = ({ companies }: any) => {
                                 <TableHeader>
                                     <TableRow>
                                         <TableHead>#</TableHead>
-                                        <TableHead>Empresa</TableHead>
+                                        <TableHead>Empresa Raiz</TableHead>
                                         <TableHead>Nº Filial</TableHead>
                                         <TableHead>Filial</TableHead>
                                         <TableHead>CNPJ</TableHead>
@@ -61,17 +62,17 @@ const Company = ({ companies }: any) => {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {companies.data.map((company: any) => (
+                                    {companies?.data.map((company: any) => (
                                         <Fragment key={company.id}>
                                             <TableRow>
-                                                <TableCell>{company.id}</TableCell>
-                                                <TableCell>
-                                                    {company.tenant.name}
+                                                <TableCell className="w-8 text-base text-red-500 font-bold">{company.id}</TableCell>
+                                                <TableCell className="w-60">
+                                                    {company.corpreason}
                                                 </TableCell>
-                                                <TableCell>
+                                                <TableCell className="w-20">
                                                     {company.subnumber}
                                                 </TableCell>
-                                                <TableCell>
+                                                <TableCell className="w-40">
                                                     {company.subname}
                                                 </TableCell>
                                                 <TableCell>
@@ -100,6 +101,11 @@ const Company = ({ companies }: any) => {
                                                         param={company.id}
                                                         identify={`o company ${company.subname}`}
                                                     />
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow className="">
+                                                <TableCell colspan={11} className={`px-0 border-b-0`}>
+                                                    <Filiais filiais={company.filial} />
                                                 </TableCell>
                                             </TableRow>
                                         </Fragment>

@@ -10,8 +10,11 @@ class Company extends Model
     use HasFactory;
 
     protected $fillable = [
+        'company_id',
+        'altername',
+        'corpreason',
         'cnpj',
-        'raiz',
+        'statereg',
         'subnumber',
         'subname',
         'address',
@@ -20,10 +23,12 @@ class Company extends Model
         'county',
         'state',
         'neighborhood',
-        'cnpj',
-        'statereg',
         'telephone',
         'whatsapp',
         'observation'
     ];
+
+    public function filial(){
+        return $this->hasMany(Company::class);
+    }
 }

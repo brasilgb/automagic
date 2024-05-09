@@ -13,19 +13,19 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->integer('altername');
-            $table->integer('corpreason');
-            $table->tinyInteger('raiz');
+            $table->foreignId('company_id')->nullable()->constrained();
+            $table->string('altername')->nullable();
+            $table->string('corpreason');
             $table->integer('cnpj');
+            $table->integer('statereg');
             $table->string('subnumber', 50);
             $table->string('subname', 50);
             $table->string('address', 80);
             $table->integer('number');
             $table->string('cep', 20);
             $table->string('county', 50);
-            $table->string('state', 20);
+            $table->string('state', 4);
             $table->string('neighborhood', 50);
-            $table->string('statereg', 50);
             $table->string('telephone', 20);
             $table->string('whatsapp', 20)->nullable();
             $table->text('observation')->nullable();

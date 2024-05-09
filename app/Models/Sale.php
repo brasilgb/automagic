@@ -22,4 +22,6 @@ class Sale extends Model
         'margem',
         'representa'
     ];
+
+    
 }

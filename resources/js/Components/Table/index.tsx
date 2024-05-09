@@ -4,12 +4,13 @@ interface TableProps {
     children?: React.ReactNode;
     className?: string;
     key?: number;
+    colspan?: number;
 }
 
 export const Table = ({ children, className }: TableProps) => {
     return (
         <div className="md:w-full overflow-y-auto">
-            <table className={`table-auto md:w-full  ${className} text-sm`}>
+            <table className={`table-auto w-full ${className} text-sm`}>
                 {children}
             </table>
         </div>
@@ -42,9 +43,9 @@ export const TableHead = ({ children, className }: TableProps) => {
     );
 };
 
-export const TableCell = ({ children, className }: TableProps) => {
+export const TableCell = ({ children, className, colspan }: TableProps) => {
     return (
-        <td className={`border-b py-2 px-2 text-gray-500 ${className}`}>
+        <td colSpan={colspan} className={`border-b py-2 px-2 text-gray-500 ${className}`}>
             {children}
         </td>
     );

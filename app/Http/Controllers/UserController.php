@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,17 +21,17 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $tenant = Auth::user();
+        $users = Auth::user();
         // dd(Auth::user());
         $search = $request->get('q');
-        if ($tenant->company_id) {
-            if($tenant->roles === 'admin'){
-                $query = User::with('tenant')->where('company_id', $tenant->company_id)->orderBy('id', 'DESC');
+        if ($users->company_id) {
+            if($users->roles === 'admin'){
+                $query = User::with('filial')->where('company_id', $users->company_id)->orderBy('id', 'DESC');
             }else{
-                $query = User::with('tenant')->where('roles', 'user')->where('company_id', $tenant->company_id)->orderBy('id', 'DESC');
+                $query = User::with('filial')->where('roles', 'user')->where('company_id', $users->company_id)->orderBy('id', 'DESC');
             }
         } else {
-            $query = User::with('tenant')->orderBy('id', 'DESC');
+            $query = User::with('filial')->orderBy('id', 'DESC');
         }
 
         if ($search) {
@@ -46,8 +47,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        $tenants = Tenant::get();
-        return Inertia::render('User/addUser', ['tenants' => $tenants]);
+        $companies = Company::get();
+        return Inertia::render('User/addUser', ['companies' => $companies]);
     }
 
     /**
@@ -96,7 +97,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $wt = User::where('id', $user->id)->with('tenant')->first();
+        $wt = User::where('id', $user->id)->with('filial')->first();
         // dd($wt);
         return Inertia::render('User/editUser', ['user' => $wt]);
     }

@@ -19,15 +19,15 @@ class CompanyController extends Controller
     {
         $search = $request->get('q');
 
-        $query = Company::with('tenant')->orderBy('id', 'DESC');
+        $query = Company::with('filial')->where('company_id', null)->orderBy('id', 'DESC');
 
         if ($search) {
-            $query->where('subname', 'like', '%' . $search . '%')
+            $query->where('corpreason', 'like', '%' . $search . '%')
                 ->orWhere('cnpj', 'like', '%' . $search . '%');
         }
 
-        $companys = $query->paginate(12);
-        return Inertia::render('Company/index', ['companies' => $companys]);
+        $companies = $query->paginate(12);
+        return Inertia::render('Company/index', ['companies' => $companies]);
     }
 
     /**
@@ -35,8 +35,8 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        $tenants = Company::get();
-        return Inertia::render('Company/addCompany', ['tenants' => $tenants]);
+        $companies = Company::get();
+        return Inertia::render('Company/addCompany', ['companies' => $companies]);
     }
 
     /**
@@ -53,7 +53,7 @@ class CompanyController extends Controller
         ];
         $request->validate(
             [
-                'company_id' => 'required',
+                'corpreason' => 'required',
                 'subnumber' => 'required',
                 'subname' => 'required',
                 'address' => 'required',
@@ -68,7 +68,7 @@ class CompanyController extends Controller
             ],
             $messages,
             [
-                'company_id' => 'empresa',
+                'corpreason' => 'razão social',
                 'subnumber' => 'número filial',
                 'subname' => 'nome filial',
                 'address' => 'endereço',

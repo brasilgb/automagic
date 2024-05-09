@@ -7,15 +7,14 @@ import { Head, useForm, usePage } from '@inertiajs/react'
 import { useEffect, useState } from 'react'
 import { IoPeopleSharp } from 'react-icons/io5'
 
-const AddCompany = ({ tenants }: any) => {
+const AddCompany = ({ companies }: any) => {
 
   const { auth } = usePage().props as any;
   const [filterSearch, setFilterSearch] = useState<any>([]);
   const { data, setData, post, progress, processing, errors } = useForm({
     company_id: "",
+    corpreason: "",
     altername: "",
-    compreason: "",
-    maincompany: "",
     cliente: "",
     subnumber: "",
     subname: "",
@@ -39,7 +38,7 @@ const AddCompany = ({ tenants }: any) => {
 
   const handleSearch = (value: any) => {
     const client = value.toLowerCase();
-    const result = tenants?.filter((cl: any) => (cl.name.toLowerCase().includes(client)));
+    const result = companies?.filter((cl: any) => (cl.corpreason.toLowerCase().includes(client)));
     setFilterSearch(result);
   };
 
@@ -102,26 +101,25 @@ const AddCompany = ({ tenants }: any) => {
                     <div className="flex flex-col">
                       <label
                         className="label-form"
-                        htmlFor="compreason"
+                        htmlFor="corpreason"
                       >
                         Razão social
                       </label>
                       <input
-                        id="compreason"
+                        id="corpreason"
                         type="text"
-                        value={data.compreason}
+                        value={data.corpreason}
                         onChange={(e) => {
                           setData(
-                            "compreason",
+                            "corpreason",
                             e.target.value,
                           )
-                          handleSearch(e.target.value)
                         }}
                         className="input-form"
                       />
-                      {errors.compreason && (
+                      {errors.corpreason && (
                         <div className="text-sm text-red-500">
-                          {errors.compreason}
+                          {errors.corpreason}
                         </div>
                       )}
                     </div>
@@ -134,48 +132,75 @@ const AddCompany = ({ tenants }: any) => {
                         Nome alternativo
                       </label>
                       <input
-                        id="compreason"
+                        id="altername"
                         type="text"
-                        value={data.compreason}
+                        value={data.altername}
                         onChange={(e) => {
                           setData(
-                            "compreason",
+                            "altername",
+                            e.target.value,
+                          )
+                        }}
+                        className="input-form"
+                      />
+                    </div>
+
+                    <div className="flex flex-col relative">
+                      <label
+                        className="label-form"
+                        htmlFor="Cliente"
+                      >
+                        Empresa raiz
+                      </label>
+                      <input
+                        type="text"
+                        value={data.company_id}
+                        onChange={(e) =>
+                          setData(
+                            "company_id",
+                            e.target.value,
+                          )
+                        }
+                        className="hidden"
+                      />
+                      <input
+                        id="cliente"
+                        type="text"
+                        value={data.cliente}
+                        onChange={(e) => {
+                          setData(
+                            "cliente",
                             e.target.value,
                           )
                           handleSearch(e.target.value)
                         }}
                         className="input-form"
+                        readOnly={auth.user.company_id === null ? false : true}
                       />
-                      {errors.compreason && (
+                      {filterSearch.length > 0 &&
+                        <div className="absolute z-20 bg-gray-50 border-2 border-white shadow-md w-full rounded-sm top-16 max-h-52 overflow-y-auto">
+                          <ul className="p-1">
+                            {filterSearch.map((tenant: any, idx: number) => (
+                              <li key={idx} className={`flex items-center justify-normal ${idx < (filterSearch.length - 1) ? 'border-b border-gray-200' : ''}`}>
+                                <div
+                                  className="text-sm text-gray-600 p-1 cursor-pointer inline-block w-full"
+                                  onClick={() => handleChangeCustomer(tenant.id, tenant.corpreason)}
+                                >
+                                  {tenant.corpreason}
+                                </div>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      }
+                      {errors.company_id && (
                         <div className="text-sm text-red-500">
-                          {errors.compreason}
+                          {errors.company_id}
                         </div>
                       )}
                     </div>
-                    <div className="flex flex-col">
-                      <div className="flex items-center justify-center h-full">
-                        <label
-                          className="label-form mr-2"
-                          htmlFor="maincompany"
-                        >
-                          Esta filial será a pincipal(raiz)
-                        </label>
-                        <input
-                          id="maincompany"
-                          type="radio"
-                          value={data.maincompany}
-                          onChange={(e) => {
-                            setData(
-                              "maincompany",
-                              e.target.value,
-                            )
-                          }}
-                        />
-                      </div>
-                    </div>
+
                   </div>
-
-
                   <div className="grid md:grid-cols-6 gap-4 mt-6">
                     <div className="flex flex-col">
                       <label
@@ -267,7 +292,7 @@ const AddCompany = ({ tenants }: any) => {
                         className="input-form"
                       />
                       {errors.address && (
-                        <div className="text-red-500">
+                        <div className="text-sm text-red-500">
                           {errors.address}
                         </div>
                       )}

@@ -48,7 +48,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function company()
+    public function filial()
     {
         return $this->belongsTo(Company::class);
     }
