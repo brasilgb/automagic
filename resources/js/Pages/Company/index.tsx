@@ -76,10 +76,10 @@ const Company = ({ companies }: any) => {
                                                     {company.subname}
                                                 </TableCell>
                                                 <TableCell>
-                                                    {maskCnpj(company.cnpj)}
+                                                    {maskCnpj(company.cnpj.toString())}
                                                 </TableCell>
                                                 <TableCell>
-                                                    {maskInscEstadual(company.statereg)}
+                                                    {maskInscEstadual(company.statereg.toString())}
                                                 </TableCell>
                                                 <TableCell>
                                                     {company.telephone}

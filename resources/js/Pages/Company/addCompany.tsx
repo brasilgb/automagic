@@ -33,6 +33,11 @@ const AddCompany = ({ companies }: any) => {
 
   function handleSubmit(e: any) {
     e.preventDefault();
+    const mcnpj: any = unMask(data.cnpj)
+    const esest: any = unMask(data.cnpj)
+    setData((data) => ({ ...data, cnpj: mcnpj }));
+    setData((data) => ({ ...data, statereg: esest }));
+    
     post(route("companies.store"));
   }
 
