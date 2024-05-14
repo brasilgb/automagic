@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Meta extends Model
+class Goal extends Model
 {
     use HasFactory;
 
@@ -17,4 +17,9 @@ class Meta extends Model
         'valormeta',
         'metajuros',
     ];
+    
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 }

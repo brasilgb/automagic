@@ -7,16 +7,16 @@ import { Head, useForm, usePage } from '@inertiajs/react'
 import { useEffect, useState } from "react"
 import { IoEye, IoEyeOff, IoPeopleSharp } from 'react-icons/io5'
 
-const addUser = (tenants: any) => {
+const addUser = ({companies}: any) => {
   const { auth } = usePage().props as any;
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const [filterSearch, setFilterSearch] = useState<any>([]);
-  const tanantsNow = tenants?.tenants?.filter((ft:any) => (ft.id === auth.user.company_id)).map((t:any) => ({"id": t.id, "descricao": t.descricao}))
+  const tanantsNow = companies?.filter((ft:any) => (ft.id === auth.user.company_id)).map((t:any) => ({"id": t.id, "descricao": t.corpreason}))
 
   const { data, setData, post, processing, errors } = useForm({
     company_id: auth.user.company_id === null ? "" : tanantsNow[0].id,
-    cliente: auth.user.company_id === null ? "" : tanantsNow[0].name,
+    company: auth.user.company_id === null ? "" : tanantsNow[0].corpreason,
     name: "",
     email: "",
     password: "",
@@ -32,12 +32,12 @@ const addUser = (tenants: any) => {
 
   const handleSearch = (value: any) => {
     const client = value.toLowerCase();
-    const result = tenants?.tenants?.filter((cl: any) => (cl.name.toLowerCase().includes(client)));
+    const result = companies?.filter((cl: any) => (cl.corpreason.toLowerCase().includes(client)));
     setFilterSearch(result);
   };
 
   useEffect(() => {
-    const filter = data.cliente;
+    const filter = data.company;
     if (filter === "") {
       setFilterSearch([]);
     }
@@ -45,7 +45,7 @@ const addUser = (tenants: any) => {
 
   const handleChangeCustomer = (id: any, nome: any) => {
     setData((data) => ({ ...data, company_id: id }));
-    setData((data) => ({ ...data, cliente: nome }));
+    setData((data) => ({ ...data, company: nome }));
     setFilterSearch([]);
   };
 
@@ -99,12 +99,12 @@ const addUser = (tenants: any) => {
                         className="hidden"
                       />
                       <input
-                        id="cliente"
+                        id="company"
                         type="text"
-                        value={data.cliente}
+                        value={data.company}
                         onChange={(e) => {
                           setData(
-                            "cliente",
+                            "company",
                             e.target.value,
                           )
                           handleSearch(e.target.value)
@@ -119,9 +119,9 @@ const addUser = (tenants: any) => {
                               <li key={idx} className={`flex items-center justify-normal ${idx < (filterSearch.length - 1) ? 'border-b border-gray-200' : ''}`}>
                                 <div
                                   className="text-sm text-gray-600 p-1 cursor-pointer inline-block w-full"
-                                  onClick={() => handleChangeCustomer(tenant.id, tenant.name)}
+                                  onClick={() => handleChangeCustomer(tenant.id, tenant.corpreason)}
                                 >
-                                  {tenant.name}
+                                  {tenant.corpreason}
                                 </div>
                               </li>
                             ))}

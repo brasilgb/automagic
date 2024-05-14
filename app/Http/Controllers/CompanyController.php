@@ -19,7 +19,7 @@ class CompanyController extends Controller
     {
         $search = $request->get('q');
 
-        $query = Company::with('filial')->where('company_id', null)->orderBy('id', 'DESC');
+        $query = Company::with('company')->where('company_id', null)->orderBy('id', 'DESC');
 
         if ($search) {
             $query->where('corpreason', 'like', '%' . $search . '%')

@@ -28,7 +28,12 @@ class Company extends Model
         'observation'
     ];
 
-    public function filial(){
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+    public function company()
+    {
         return $this->hasMany(Company::class);
     }
 }

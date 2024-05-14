@@ -9,6 +9,7 @@ class SaleController extends Controller
 {
     public function index()
     {
+        
         return Inertia::render('Sale/index');
     }
 }

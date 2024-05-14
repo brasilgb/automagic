@@ -20,18 +20,18 @@ class UserController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
+    { 
         $users = Auth::user();
         // dd(Auth::user());
         $search = $request->get('q');
         if ($users->company_id) {
             if($users->roles === 'admin'){
-                $query = User::with('filial')->where('company_id', $users->company_id)->orderBy('id', 'DESC');
+                $query = User::with('company')->where('company_id', $users->company_id)->orderBy('id', 'DESC');
             }else{
-                $query = User::with('filial')->where('roles', 'user')->where('company_id', $users->company_id)->orderBy('id', 'DESC');
+                $query = User::with('company')->where('roles', 'user')->where('company_id', $users->company_id)->orderBy('id', 'DESC');
             }
         } else {
-            $query = User::with('filial')->orderBy('id', 'DESC');
+            $query = User::with('company')->orderBy('id', 'DESC');
         }
 
         if ($search) {

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Association;
+use App\Models\Goal;
 use App\Models\Sale;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -11,6 +12,12 @@ class HomeController extends Controller
     public function index()
     {
         $sales = Sale::first();
-        return Inertia::render('Home/index', ["sales" => $sales]);
+        $goals = Goal::first();
+        $associations = Association::first();
+        return Inertia::render('Home/index', [
+            "sales" => $sales,
+            "goals" => $goals,
+            "associations" => $associations,
+        ]);
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Association;
-use App\Models\Meta;
+use App\Models\Goal;
 use App\Models\Sale;
 use App\Models\Company;
 use Illuminate\Http\Request;
@@ -27,7 +27,7 @@ class JsonToDatabaseController extends Controller
                         ],
                     ], 201);
                 } else {
-                    $existmeta = Meta::where('anomes', $dbdata['ANOMES'])->where('cnpj', $dbdata["CNPJ"])->exists();
+                    $existmeta = Goal::where('anomes', $dbdata['ANOMES'])->where('cnpj', $dbdata["CNPJ"])->exists();
                     $data[] = [
                         "filial" => $dbdata['FILIAL'],
                         "cnpj" => $dbdata['CNPJ'],
@@ -37,9 +37,9 @@ class JsonToDatabaseController extends Controller
                     ];
                 }
                 if (!$existmeta) {
-                    Meta::insert($data);
+                    Goal::insert($data);
                 } else {
-                    Meta::where('anomes', $dbdata['ANOMES'])->where('cnpj', $dbdata['CNPJ'])->update(
+                    Goal::where('anomes', $dbdata['ANOMES'])->where('cnpj', $dbdata['CNPJ'])->update(
                         [
                             "anomes" => $dbdata['ANOMES'],
                             "valormeta" => $dbdata['VALORMETA'],
@@ -50,7 +50,7 @@ class JsonToDatabaseController extends Controller
             }
             return response()->json([
                 "response" => [
-                    "message" => "Metas cadastradas com sucesso!",
+                    "message" => "Goals cadastradas com sucesso!",
                     "success" => true,
                     "status" => 201,
                 ],

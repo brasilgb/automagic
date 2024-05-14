@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use App\Traits\TenantAttributeTrait;
-use App\Traits\TenantScoped;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Sale extends Model
+class Association extends Model
 {
     use HasFactory;
 
@@ -15,14 +13,15 @@ class Sale extends Model
         'company_id',
         'cnpj',
         'filial',
-        'descfilial',
         'dtvenda',
+        'assoc',
+        'descassoc',
         'valdevolucao',
         'valvenda',
         'margem',
         'representa'
     ];
-
+    
     public function company()
     {
         return $this->belongsTo(Company::class);

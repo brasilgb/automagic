@@ -11,7 +11,7 @@ import { HeaderContent, TitleTop } from "@/Components/PageTop";
 import { IoChatboxEllipses } from "react-icons/io5";
 
 
-const Home = ({ sales }: any) => {
+const Home = ({ goals, sales, associations }: any) => {
 
   return (
     <AuthenticatedLayout>
