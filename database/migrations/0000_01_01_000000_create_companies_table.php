@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('company_id')->nullable()->constrained();
             $table->string('altername')->nullable();
             $table->string('corpreason');
-            $table->integer('cnpj');
-            $table->integer('statereg');
+            $table->bigInteger('cnpj');
+            $table->bigInteger('statereg');
             $table->string('subnumber', 50);
             $table->string('subname', 50);
             $table->string('address', 80);

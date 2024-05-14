@@ -66,7 +66,7 @@ const Company = ({ companies }: any) => {
                                         <Fragment key={company.id}>
                                             <TableRow>
                                                 <TableCell className="w-8 text-base text-red-500 font-bold">{company.id}</TableCell>
-                                                <TableCell className="w-60">
+                                                <TableCell className="w-44">
                                                     {company.corpreason}
                                                 </TableCell>
                                                 <TableCell className="w-20">

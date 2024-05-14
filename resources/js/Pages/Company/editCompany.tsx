@@ -10,6 +10,9 @@ const EditCompany = ({companies}: any) => {
 
   const { data, setData, patch, progress, processing, errors } = useForm({
     company_id: companies.company_id,
+    corpreason: companies.corpreason,
+    altername: companies.altername,
+    cliente: companies.companies,
     subnumber: companies.subnumber,
     subname: companies.subname,
     address: companies.address,
@@ -27,9 +30,13 @@ const EditCompany = ({companies}: any) => {
 
   function handleSubmit(e: any) {
     e.preventDefault();
+    // const mcnpj: any = unMask(data.cnpj)
+    // const esest: any = unMask(data.statereg)
+    // setData((data) => ({ ...data, cnpj: mcnpj }));
+    // setData((data) => ({ ...data, statereg: esest }));
+    
     patch(route("companies.update", companies.id));
   }
-
 
   const getCep = (cep: string) => {
     const cleanCep = unMask(cep);
@@ -73,7 +80,87 @@ const EditCompany = ({companies}: any) => {
             <form onSubmit={handleSubmit} autoComplete="off">
               <CardBody className=" border-y border-gray-100">
                 <div className="px-3 my-4">
-                  <div className="grid md:grid-cols-6 gap-4">
+                  <div className="grid md:grid-cols-3 gap-4 mt-6">
+                    <div className="flex flex-col">
+                      <label
+                        className="label-form"
+                        htmlFor="corpreason"
+                      >
+                        Razão social
+                      </label>
+                      <input
+                        id="corpreason"
+                        type="text"
+                        value={data.corpreason}
+                        onChange={(e) => {
+                          setData(
+                            "corpreason",
+                            e.target.value,
+                          )
+                        }}
+                        className="input-form"
+                      />
+                      {errors.corpreason && (
+                        <div className="text-sm text-red-500">
+                          {errors.corpreason}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex flex-col">
+                      <label
+                        className="label-form"
+                        htmlFor="altername"
+                      >
+                        Nome alternativo
+                      </label>
+                      <input
+                        id="altername"
+                        type="text"
+                        value={data.altername}
+                        onChange={(e) => {
+                          setData(
+                            "altername",
+                            e.target.value,
+                          )
+                        }}
+                        className="input-form"
+                      />
+                    </div>
+
+                    <div className="flex flex-col relative">
+                      <label
+                        className="label-form"
+                        htmlFor="Cliente"
+                      >
+                        Empresa raiz
+                      </label>
+                      <input
+                        type="text"
+                        value={data.company_id}
+                        onChange={(e) =>
+                          setData(
+                            "company_id",
+                            e.target.value,
+                          )
+                        }
+                        className="hidden"
+                      />
+                      <input
+                        id="cliente"
+                        type="text"
+                        value={data.cliente}
+                        onChange={(e) =>
+                          setData(
+                            "cliente",
+                            e.target.value)}
+                        className="input-form"
+                        readOnly
+                      />
+                    </div>
+
+                  </div>
+                  <div className="grid md:grid-cols-6 gap-4 mt-6">
                     <div className="flex flex-col">
                       <label
                         className="label-form"
@@ -85,8 +172,10 @@ const EditCompany = ({companies}: any) => {
                         id="subnumber"
                         type="text"
                         value={data.subnumber}
+                        onChange={(e) =>
+                          setData("subnumber", e.target.value)
+                        }
                         className="input-form"
-                        disabled
                       />
                       {errors.subnumber && (
                         <div className="text-sm text-red-500">
@@ -100,7 +189,7 @@ const EditCompany = ({companies}: any) => {
                         className="label-form"
                         htmlFor="subname"
                       >
-                        Descrição
+                        Nome filial
                       </label>
                       <input
                         id="subname"
@@ -162,7 +251,7 @@ const EditCompany = ({companies}: any) => {
                         className="input-form"
                       />
                       {errors.address && (
-                        <div className="text-red-500">
+                        <div className="text-sm text-red-500">
                           {errors.address}
                         </div>
                       )}
@@ -275,14 +364,14 @@ const EditCompany = ({companies}: any) => {
                     <div className="flex flex-col">
                       <label
                         className="label-form"
-                        htmlFor="cpf"
+                        htmlFor="cnpj"
                       >
                         CNPJ
                       </label>
                       <input
-                        id="cpf"
+                        id="cnpj"
                         type="text"
-                        value={maskCpfCnpj(data.cnpj)}
+                        value={maskCpfCnpj(data.cnpj.toString())}
                         onChange={(e) =>
                           setData("cnpj", e.target.value)
                         }
@@ -305,7 +394,7 @@ const EditCompany = ({companies}: any) => {
                       <input
                         id="statereg"
                         type="text"
-                        value={maskInscEstadual(data.statereg)}
+                        value={maskInscEstadual(data.statereg.toString())}
                         onChange={(e) =>
                           setData(
                             "statereg",
@@ -352,7 +441,7 @@ const EditCompany = ({companies}: any) => {
                       <label
                         className="label-form"
                         htmlFor="whatsapp"
-                      >12345678
+                      >
                         Whatsapp(Ex.: 5551985471163)
                       </label>
                       <input

@@ -45,7 +45,7 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-
+// dd($data);
         $messages = [
             'required' => 'O campo :attribute deve ser preenchido',
             'cnpj' => 'CNPJ inválido',
@@ -116,7 +116,6 @@ class CompanyController extends Controller
         ];
         $request->validate(
             [
-                'company_id' => 'required',
                 'subnumber' => 'required',
                 'subname' => 'required',
                 'address' => 'required',
@@ -131,7 +130,6 @@ class CompanyController extends Controller
             ],
             $messages,
             [
-                'company_id' => 'empresa',
                 'subnumber' => 'número filial',
                 'subname' => 'nome filial',
                 'address' => 'endereço',

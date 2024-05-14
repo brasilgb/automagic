@@ -16,7 +16,7 @@ const Filiais = ({ filiais }: FilialProps) => {
                     <Fragment key={filial.id}>
                         <TableRow>
                             <TableCell className="w-8 text-right text-sm text-gray-500 font-bold">{filial.id}</TableCell>
-                            <TableCell className="w-50">
+                            <TableCell className="w-44">
                                 {filial.corpreason}
                             </TableCell>
                             <TableCell className="w-20">
@@ -26,10 +26,10 @@ const Filiais = ({ filiais }: FilialProps) => {
                                 {filial.subname}
                             </TableCell>
                             <TableCell>
-                                {maskCnpj(filial.cnpj)}
+                                {maskCnpj(filial.cnpj.toString())}
                             </TableCell>
                             <TableCell>
-                                {maskInscEstadual(filial.statereg)}
+                                {maskInscEstadual(filial.statereg.toString())}
                             </TableCell>
                             <TableCell>
                                 {filial.telephone}
