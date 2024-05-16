@@ -6,6 +6,7 @@ interface KpiTesteProps {
   icon: any;
   title: string;
   value: string;
+  valrep?: string;
   textcolor: string;
   bgcolor: string;
   iconcolor: string;
@@ -27,7 +28,7 @@ export const Kpi = (props: KpiTesteProps) => {
           </div>
         </div>
         <div className="text-xs text-gray-400 px-4 py-2 border-t border-gray-100">
-          <span className={`px-2 py-0.5  ${props.textcolor}  ${props.bgcolor} font-bold rounded`}>+15%</span> que no mês anterior
+          <span className={`px-2 py-0.5  ${props.textcolor}  ${props.bgcolor} font-bold rounded`}>{props.valrep}%</span> que no mês anterior
         </div>
       </div>
   )

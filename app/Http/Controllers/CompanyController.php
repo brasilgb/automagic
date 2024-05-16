@@ -142,8 +142,8 @@ class CompanyController extends Controller
             ]
         );
         $company->update($data);
-        Session::flash('success', 'Filial editado com sucesso!');
-        return Redirect::route('companies.index', ['tenant' => $company->id]);
+        Session::flash('success', 'Empresa editada com sucesso!');
+        return Redirect::route('companies.show', ['company' => $company->id]);
     }
 
     /**

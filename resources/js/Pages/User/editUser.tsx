@@ -12,7 +12,7 @@ const editUser = ({user}: any) => {
   const [showPassword2, setShowPassword2] = useState(false);
   const { data, setData, put, reset, processing, errors } = useForm({
     company_id: user.company_id,
-    cliente: user.tenant?.name,
+    cliente: user.company?.corpreason,
     name: user.name,
     email: user.email,
     password: "",

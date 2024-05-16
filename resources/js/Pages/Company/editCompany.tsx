@@ -1,12 +1,15 @@
 import { AddButton, BackButton, SaveButton } from '@/Components/Buttons'
 import { Card, CardBody, CardContainer, CardFooter, CardHeader, CardHeaderContent } from '@/Components/Card'
+import FlashMessage from '@/Components/FlashMessage'
 import { BreadCrumbTop, HeaderContent, TitleTop } from '@/Components/PageTop'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { maskCep, maskCpfCnpj, maskInscEstadual, maskPhone, unMask } from '@/Utils/mask'
-import { Head, useForm } from '@inertiajs/react'
+import { Head, useForm, usePage } from '@inertiajs/react'
 import { IoPeopleSharp } from 'react-icons/io5'
 
 const EditCompany = ({companies}: any) => {
+const { flash } = usePage().props as any;
+console.log(flash);
 
   const { data, setData, patch, progress, processing, errors } = useForm({
     company_id: companies.company_id,
@@ -30,11 +33,6 @@ const EditCompany = ({companies}: any) => {
 
   function handleSubmit(e: any) {
     e.preventDefault();
-    // const mcnpj: any = unMask(data.cnpj)
-    // const esest: any = unMask(data.statereg)
-    // setData((data) => ({ ...data, cnpj: mcnpj }));
-    // setData((data) => ({ ...data, statereg: esest }));
-    
     patch(route("companies.update", companies.id));
   }
 
@@ -69,6 +67,7 @@ const EditCompany = ({companies}: any) => {
             />
           </HeaderContent>
           <CardContainer>
+          <FlashMessage message={flash} />
             <CardHeader>
               <CardHeaderContent>
                 <BackButton url={"/companies"} label={"Voltar"} />

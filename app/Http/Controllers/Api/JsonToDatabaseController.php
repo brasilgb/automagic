@@ -18,6 +18,8 @@ class JsonToDatabaseController extends Controller
 
         if ($req["type"] === "meta") {
             foreach ($req["dbdata"] as $dbdata) {
+
+                $compid = Company::where('cnpj', $dbdata["CNPJ"])->first()->id;
                 $existcnpj = Company::where('cnpj', $dbdata["CNPJ"])->exists();
                 if (!$existcnpj) {
 
@@ -29,6 +31,7 @@ class JsonToDatabaseController extends Controller
                 } else {
                     $existmeta = Goal::where('anomes', $dbdata['ANOMES'])->where('cnpj', $dbdata["CNPJ"])->exists();
                     $data[] = [
+                        "company_id" => $compid,
                         "filial" => $dbdata['FILIAL'],
                         "cnpj" => $dbdata['CNPJ'],
                         "anomes" => $dbdata['ANOMES'],
@@ -59,6 +62,7 @@ class JsonToDatabaseController extends Controller
 
         if ($req["type"] === "assoc") {
             foreach ($req["dbdata"] as $dbdata) {
+                $compid = Company::where('cnpj', $dbdata["CNPJ"])->first()->id;
                 $existcnpj = Company::where('cnpj', $dbdata["CNPJ"])->exists();
                 if (!$existcnpj) {
 
@@ -70,6 +74,7 @@ class JsonToDatabaseController extends Controller
                 } else {
                     $existassoc = Association::where('dtvenda', $dbdata['DTVENDA'])->where('cnpj', $dbdata["CNPJ"])->exists();
                     $data[] = [
+                        "company_id" => $compid,
                         "cnpj" => $dbdata['CNPJ'],
                         "filial" => $dbdata['FILIAL'],
                         "dtvenda" => $dbdata['DTVENDA'],
@@ -117,8 +122,10 @@ class JsonToDatabaseController extends Controller
                         ],
                     ], 201);
                 } else {
+                    $compid = Company::where('cnpj', $dbdata["CNPJ"])->first()->id;
                     $existsale = Sale::where('dtvenda', $dbdata['DTVENDA'])->where('cnpj', $dbdata["CNPJ"])->exists();
                     $data[] = [
+                        "company_id" => $compid,
                         "cnpj" => $dbdata['CNPJ'],
                         "filial" => $dbdata['FILIAL'],
                         "descfilial" => $dbdata['DESCFILIAL'],
@@ -151,6 +158,5 @@ class JsonToDatabaseController extends Controller
                 ],
             ], 201);
         }
-        
     }
 }

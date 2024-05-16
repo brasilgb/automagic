@@ -97,7 +97,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $wt = User::where('id', $user->id)->with('filial')->first();
+        $wt = User::where('id', $user->id)->with('company')->first();
         // dd($wt);
         return Inertia::render('User/editUser', ['user' => $wt]);
     }
