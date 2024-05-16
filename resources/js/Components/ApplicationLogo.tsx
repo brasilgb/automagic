@@ -1,12 +1,6 @@
-
-interface LogoProps {
-    width?: any;
-}
- const ApplicationLogo = ({width}: LogoProps) => {
+const ApplicationLogo = () => {
     return (
-        <div className={`${width} flex items-center justify-center`}>
-            <img src="storage/images/automahost.png" alt="Logo" />
-        </div>
+        <img src="storage/images/automahost.png" alt="Logo" className="w-10" />
     );
 }
 export default ApplicationLogo;

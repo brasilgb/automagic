@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string("cnpj");
             $table->string("filial");
             $table->string("anomes");
-            $table->string("valormeta");
-            $table->string("metajuros");
+            $table->decimal("faturamento", 15,2);
+            $table->decimal("valormeta", 15,2);
+            $table->decimal("metajuros", 15,4);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });

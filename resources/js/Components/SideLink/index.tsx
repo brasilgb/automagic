@@ -11,8 +11,8 @@ const SideLink = (props: LinkProps) => {
     return (
         <li>
             <Link
-                className={`flex items-center p-2 text-base font-medium gap-x-2 rounded-md hover:bg-white hover:bg-opacity-40
-                ${props.active ? "bg-white text-gray-800" : "text-white"}`}
+                className={`flex items-center h-10 p-2 text-sm gap-x-2 rounded-md hover:bg-white hover:bg-opacity-40
+                ${props.active ? "bg-white text-blue-primary font-medium" : "text-white"}`}
                 href={props.url}
             >
                 <div className={`${!props.openSide && 'py-0'}`}>

@@ -9,11 +9,9 @@ interface TableProps {
 
 export const Table = ({ children, className }: TableProps) => {
     return (
-        <div className="md:w-full overflow-y-auto">
-            <table className={`table-auto w-full ${className} text-sm`}>
-                {children}
-            </table>
-        </div>
+        <table className={`table-auto ${className} text-sm`}>
+            {children}
+        </table>
     );
 };
 
@@ -36,7 +34,7 @@ export const TableRow = ({ children, className, key }: TableProps) => {
 export const TableHead = ({ children, className }: TableProps) => {
     return (
         <th
-            className={`text-left py-3 px-2 bg-gray-200 text-gray-600 ${className}`}
+            className={`text-left py-3 px-2 text-gray-50 ${className}`}
         >
             {children}
         </th>

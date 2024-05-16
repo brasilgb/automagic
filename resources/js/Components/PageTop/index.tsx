@@ -4,11 +4,12 @@ import React, { Fragment } from "react";
 interface PageTopProps {
     children?: React.ReactNode;
     links?: any;
+    className?: string;
 }
 
-export const HeaderContent = ({ children }: PageTopProps) => {
+export const HeaderContent = ({ children, className }: PageTopProps) => {
     return (
-        <section className="flex items-center justify-between mb-4">
+        <section className={`flex items-center justify-between mb-4 ${className}`}>
             {children}
         </section>
     );

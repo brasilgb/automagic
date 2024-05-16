@@ -26,6 +26,18 @@ interface ButtonsProps {
     status?: string;
     id?: string;
     sttmessage?: number;
+    active?: boolean;
+}
+
+export const AnaliseButton = ({ onclick, label, active }: ButtonsProps) => {
+    return (
+        <button
+            onClick={onclick}
+            className={`px-3 py-1.5 w-48 text-xs uppercase font-bold shadow-md border-2 border-white ${active ? 'bg-blue-secundary text-white' : 'bg-blue-secundary/0'} hover:bg-blue-secundary text-gray-500 hover:text-white rounded-md transition-colors duration-300`}
+        >
+            {label}
+        </button>
+    )
 }
 
 export const AddButton = ({ url, label }: ButtonsProps) => {
@@ -214,7 +226,7 @@ export const EditButton = ({ url, param }: ButtonsProps) => {
             as="button"
             type="button"
             title={`Editar registro`}
-            data={{page: param}}
+            data={{ page: param }}
         >
             <TbEdit size={18} />
         </Link>

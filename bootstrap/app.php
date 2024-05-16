@@ -16,7 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
-
+        $middleware->alias([
+            'isRoot' => \App\Http\Middleware\IsRoot::class,
+            'isClient' => \App\Http\Middleware\IsClient::class,
+        ]);
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {

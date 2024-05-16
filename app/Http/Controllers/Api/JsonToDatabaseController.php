@@ -15,45 +15,48 @@ class JsonToDatabaseController extends Controller
     public function index(Request $request)
     {
         $req = $request->all();
-
-        if ($req["type"] === "meta") {
+        if ($req["type"] === "venda") {
             foreach ($req["dbdata"] as $dbdata) {
-
-                $compid = Company::where('cnpj', $dbdata["CNPJ"])->first()->id;
                 $existcnpj = Company::where('cnpj', $dbdata["CNPJ"])->exists();
                 if (!$existcnpj) {
 
                     return response()->json([
                         "response" => [
-                            "message" => "CNPJ Inexistente na base de dados de filiais (metas)!",
+                            "message" => "CNPJ Inexistente na base de dados de filiais (venda)!",
                         ],
                     ], 201);
                 } else {
-                    $existmeta = Goal::where('anomes', $dbdata['ANOMES'])->where('cnpj', $dbdata["CNPJ"])->exists();
+                    $compid = Company::where('cnpj', $dbdata["CNPJ"])->first()->id;
+                    $existsale = Sale::where('dtvenda', $dbdata['DTVENDA'])->where('cnpj', $dbdata["CNPJ"])->exists();
                     $data[] = [
                         "company_id" => $compid,
-                        "filial" => $dbdata['FILIAL'],
                         "cnpj" => $dbdata['CNPJ'],
-                        "anomes" => $dbdata['ANOMES'],
-                        "valormeta" => $dbdata['VALORMETA'],
-                        "metajuros" => $dbdata['METAJUROS'],
+                        "filial" => $dbdata['FILIAL'],
+                        "descfilial" => $dbdata['DESCFILIAL'],
+                        "dtvenda" => $dbdata['DTVENDA'],
+                        "valdevolucao" => $dbdata['VALDEVOLUCAO'],
+                        "valvenda" => $dbdata['VALVENDA'],
+                        "margem" => $dbdata['MARGEM'],
+                        "representa" => $dbdata['REPRESENTA'],
                     ];
                 }
-                if (!$existmeta) {
-                    Goal::insert($data);
+                if (!$existsale) {
+                    Sale::insert($data);
                 } else {
-                    Goal::where('anomes', $dbdata['ANOMES'])->where('cnpj', $dbdata['CNPJ'])->update(
+                    Sale::where('dtvenda', $dbdata['DTVENDA'])->where('cnpj', $dbdata['CNPJ'])->update(
                         [
-                            "anomes" => $dbdata['ANOMES'],
-                            "valormeta" => $dbdata['VALORMETA'],
-                            "metajuros" => $dbdata['METAJUROS'],
+                            "dtvenda" => $dbdata['DTVENDA'],
+                            "valdevolucao" => $dbdata['VALDEVOLUCAO'],
+                            "valvenda" => $dbdata['VALVENDA'],
+                            "margem" => $dbdata['MARGEM'],
+                            "representa" => $dbdata['REPRESENTA'],
                         ]
                     );
                 }
             }
             return response()->json([
                 "response" => [
-                    "message" => "Goals cadastradas com sucesso!",
+                    "message" => "Vendas cadastradas com sucesso!",
                     "success" => true,
                     "status" => 201,
                 ],
@@ -111,48 +114,48 @@ class JsonToDatabaseController extends Controller
             ], 201);
         }
 
-        if ($req["type"] === "venda") {
+        if ($req["type"] === "meta") {
             foreach ($req["dbdata"] as $dbdata) {
+
+                $compid = Company::where('cnpj', $dbdata["CNPJ"])->first()->id;
                 $existcnpj = Company::where('cnpj', $dbdata["CNPJ"])->exists();
+                $sales = Sale::where('cnpj', $dbdata["CNPJ"])->get();
+                $sumsales = $sales->sum('valvenda');
                 if (!$existcnpj) {
 
                     return response()->json([
                         "response" => [
-                            "message" => "CNPJ Inexistente na base de dados de filiais (venda)!",
+                            "message" => "CNPJ Inexistente na base de dados de filiais (metas)!",
                         ],
                     ], 201);
                 } else {
-                    $compid = Company::where('cnpj', $dbdata["CNPJ"])->first()->id;
-                    $existsale = Sale::where('dtvenda', $dbdata['DTVENDA'])->where('cnpj', $dbdata["CNPJ"])->exists();
+                    $existmeta = Goal::where('anomes', $dbdata['ANOMES'])->where('cnpj', $dbdata["CNPJ"])->exists();
                     $data[] = [
                         "company_id" => $compid,
-                        "cnpj" => $dbdata['CNPJ'],
                         "filial" => $dbdata['FILIAL'],
-                        "descfilial" => $dbdata['DESCFILIAL'],
-                        "dtvenda" => $dbdata['DTVENDA'],
-                        "valdevolucao" => $dbdata['VALDEVOLUCAO'],
-                        "valvenda" => $dbdata['VALVENDA'],
-                        "margem" => $dbdata['MARGEM'],
-                        "representa" => $dbdata['REPRESENTA'],
+                        "cnpj" => $dbdata['CNPJ'],
+                        "anomes" => $dbdata['ANOMES'],
+                        "faturamento" => $sumsales,
+                        "valormeta" => $dbdata['VALORMETA'],
+                        "metajuros" => $dbdata['METAJUROS'],
                     ];
                 }
-                if (!$existsale) {
-                    Sale::insert($data);
+                if (!$existmeta) {
+                    Goal::insert($data);
                 } else {
-                    Sale::where('dtvenda', $dbdata['DTVENDA'])->where('cnpj', $dbdata['CNPJ'])->update(
+                    Goal::where('anomes', $dbdata['ANOMES'])->where('cnpj', $dbdata['CNPJ'])->update(
                         [
-                            "dtvenda" => $dbdata['DTVENDA'],
-                            "valdevolucao" => $dbdata['VALDEVOLUCAO'],
-                            "valvenda" => $dbdata['VALVENDA'],
-                            "margem" => $dbdata['MARGEM'],
-                            "representa" => $dbdata['REPRESENTA'],
+                            "anomes" => $dbdata['ANOMES'],
+                            "faturamento" => $sumsales,
+                            "valormeta" => $dbdata['VALORMETA'],
+                            "metajuros" => $dbdata['METAJUROS'],
                         ]
                     );
                 }
             }
             return response()->json([
                 "response" => [
-                    "message" => "Associacoes cadastradas com sucesso!",
+                    "message" => "Metas cadastradas com sucesso!",
                     "success" => true,
                     "status" => 201,
                 ],

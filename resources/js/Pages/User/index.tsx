@@ -44,23 +44,23 @@ const User = ({ users }: any) => {
                             </CardHeaderContent>
                         </CardHeader>
                         <FlashMessage message={'flash'} />
-                        <CardBody>
-                            <Table>
+                        <CardBody className="p-1">
+                        <Table className="bg-blue-secundary w-full">
                                 <TableHeader>
                                     <TableRow>
                                         <TableHead>#</TableHead>
                                         <TableHead>Empresa</TableHead>
                                         <TableHead>Nome</TableHead>
                                         <TableHead>E-mail</TableHead>
-                                        <TableHead>Papel</TableHead>
+                                        <TableHead>Permissões</TableHead>
                                         <TableHead>Cadastro</TableHead>
                                         <TableHead></TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {users.data.map((user: any) => (
+                                    {users.data.map((user: any, idx: number) => (
                                         <Fragment key={user?.id}>
-                                            <TableRow>
+                                           <TableRow className={`${idx % 2 === 0 ? 'bg-gray-50' : 'bg-gray-100'}`}>
                                                 <TableCell>{user?.id}</TableCell>
                                                 <TableCell>
                                                     {user?.company?.corpreason}
@@ -72,7 +72,7 @@ const User = ({ users }: any) => {
                                                     {user?.email}
                                                 </TableCell>
                                                 <TableCell>
-                                                    {roleUserByValue(user?.roles)}
+                                                    {user?.roles}
                                                 </TableCell>
                                                 <TableCell>
                                                     {moment(

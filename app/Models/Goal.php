@@ -14,6 +14,7 @@ class Goal extends Model
         'cnpj',
         'filial',
         'anomes',
+        'faturamento',
         'valormeta',
         'metajuros',
     ];

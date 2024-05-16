@@ -1,46 +1,45 @@
+import { Card, CardBody, CardFooter } from "@/Components/Card"
+import { MoneyptBR, ValuePercent } from "@/Components/Money"
+import { HeaderContent, TitleTop } from "@/Components/PageTop"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/Components/Table'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { Head } from '@inertiajs/react'
 import moment from 'moment'
-import React from 'react'
+import React, { useState } from 'react'
+import { GiReceiveMoney } from "react-icons/gi"
+import Faturamento from "./Faturamento"
+import { AnaliseButton } from "@/Components/Buttons"
+import Associacao from "./Associacao"
 
-type Props = {}
-
-const Sales = ({ sales }: any) => {
-  console.log(sales);
+const Sales = ({ sales, association }: any) => {
+const [alteredSales, setAlteredSales] = useState('faturamento')
 
   return (
     <AuthenticatedLayout>
       <Head title="Vendas" />
-
-      <div className="py-12">
-        <div className="mx-auto sm:px-6 lg:px-8">
-          <div className="bg-white overflow-hidden shadow-sm rounded">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>#</TableHead>
-                  <TableHead>Data venda</TableHead>
-                  <TableHead>Venda</TableHead>
-                  <TableHead>Margem</TableHead>
-                  <TableHead>Representa</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {sales.map((sale: any, idx: number) => (
-                  <TableRow>
-                    <TableCell>{sale.id}</TableCell>
-                    <TableCell>{moment(sale.dtvenda).format("DD/MM/YYYY")}</TableCell>
-                    <TableCell>{sale.valvenda}</TableCell>
-                    <TableCell>{sale.margem}</TableCell>
-                    <TableCell>{sale.representa}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+      <Card>
+        <HeaderContent>
+          <TitleTop>
+            <GiReceiveMoney size={30} />
+            <span className="ml-2">Vendas</span>
+          </TitleTop>
+          <TitleTop />
+        </HeaderContent>
+        <HeaderContent>
+          <div className="flex items-center justify-center gap-6 w-full">
+            <AnaliseButton label="Faturamento" onclick={() => setAlteredSales('faturamento')} active={alteredSales === 'faturamento' ? true : false} />
+            <AnaliseButton label="Associação" onclick={() => setAlteredSales('associacao')} active={alteredSales === 'associacao' ? true : false} />
           </div>
-        </div>
-      </div>
+        </HeaderContent>
+        <CardBody className="rounded-md p-1">
+          {alteredSales === 'faturamento' &&
+          <Faturamento data={sales} />
+          }
+          {alteredSales === 'associacao' &&
+          <Associacao data={association} />
+          }
+        </CardBody>
+      </Card>
     </AuthenticatedLayout>
   )
 }

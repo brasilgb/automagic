@@ -13,7 +13,20 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                roboto: ["Roboto", "sans-serif"],
+            },
+            colors: {
+                blue: {
+                    terciary: "#617C8D",
+                    secundary: "#0174BE",
+                    primary: "#0C356A",
+                },
+                red: {
+                    primary: "#CA0156",
+                },
+                megb: {
+                    yellow: "#EEA917",
+                },
             },
         },
     },

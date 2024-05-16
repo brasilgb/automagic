@@ -47,7 +47,7 @@ const Company = ({ companies }: any) => {
                         </CardHeader>
                         <FlashMessage message={'flash'} />
                         <CardBody>
-                            <Table>
+                            <Table className="bg-blue-secundary w-full">
                                 <TableHeader>
                                     <TableRow>
                                         <TableHead>#</TableHead>
@@ -62,9 +62,9 @@ const Company = ({ companies }: any) => {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {companies?.data.map((company: any) => (
+                                    {companies?.data.map((company: any, idx: number) => (
                                         <Fragment key={company.id}>
-                                            <TableRow>
+                                            <TableRow className={`${idx % 2 === 0 ? 'bg-gray-50' : 'bg-gray-100'}`}>
                                                 <TableCell className="w-8 text-base text-red-500 font-bold">{company.id}</TableCell>
                                                 <TableCell className="w-44">
                                                     {company.corpreason}
@@ -103,8 +103,8 @@ const Company = ({ companies }: any) => {
                                                     />
                                                 </TableCell>
                                             </TableRow>
-                                            <TableRow className="">
-                                                <TableCell colspan={11} className={`px-0 border-b-0`}>
+                                            <TableRow className="!p-0">
+                                                <TableCell colspan={11} className={`px-0 border-b-0 !p-0`}>
                                                     <Filiais filiais={company.filial} />
                                                 </TableCell>
                                             </TableRow>

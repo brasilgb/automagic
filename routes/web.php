@@ -20,14 +20,21 @@ use Illuminate\Support\Facades\Route;
 //     return Inertia::render('Dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::middleware(['auth', 'isRoot'])->group(function () {
+    Route::resource('/companies', CompanyController::class);
+});
+
+Route::middleware(['auth', 'isClient'])->group(function () {
+    Route::get('/sales', [SaleController::class, 'index'])->name('sales');
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('dashboard');
-    Route::get('/sales', [SaleController::class, 'index'])->name('sales');
+    Route::get('/unauthorized', [HomeController::class, 'unauthorized'])->name('unauthorized');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('/companies', CompanyController::class);
     Route::resource('/users', UserController::class);
 });
 

@@ -20,4 +20,9 @@ class HomeController extends Controller
             "associations" => $associations,
         ]);
     }
+
+    public function unauthorized() 
+    {
+        return Inertia::render('Unauthorized/index');
+    }
 }
