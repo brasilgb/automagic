@@ -17,7 +17,7 @@ class JsonToDatabaseController extends Controller
         $req = $request->all();
         if ($req["type"] === "venda") {
             foreach ($req["dbdata"] as $dbdata) {
-                $existcnpj = Company::where('cnpj', $dbdata["CNPJ"])->exists();
+                $existcnpj = Company::where('cnpj', $dbdata["resumo_cnpj"])->exists();
                 if (!$existcnpj) {
 
                     return response()->json([
@@ -26,30 +26,30 @@ class JsonToDatabaseController extends Controller
                         ],
                     ], 201);
                 } else {
-                    $compid = Company::where('cnpj', $dbdata["CNPJ"])->first()->id;
-                    $existsale = Sale::where('dtvenda', $dbdata['DTVENDA'])->where('cnpj', $dbdata["CNPJ"])->exists();
+                    $compid = Company::where('cnpj', $dbdata["resumo_cnpj"])->first()->id;
+                    $existsale = Sale::where('dtvenda', $dbdata['resumo_datmvt'])->where('cnpj', $dbdata["resumo_cnpj"])->exists();
                     $data[] = [
                         "company_id" => $compid,
-                        "cnpj" => $dbdata['CNPJ'],
-                        "filial" => $dbdata['FILIAL'],
-                        "descfilial" => $dbdata['DESCFILIAL'],
-                        "dtvenda" => $dbdata['DTVENDA'],
-                        "valdevolucao" => $dbdata['VALDEVOLUCAO'],
-                        "valvenda" => $dbdata['VALVENDA'],
-                        "margem" => $dbdata['MARGEM'],
-                        "representa" => $dbdata['REPRESENTA'],
+                        "cnpj" => $dbdata['resumo_cnpj'],
+                        "filial" => $dbdata['resumo_codfil'],
+                        "descfilial" => $dbdata['resumo_desfil'],
+                        "dtvenda" => $dbdata['resumo_datmvt'],
+                        "valdevolucao" => $dbdata['resumo_valdev'],
+                        "valvenda" => $dbdata['resumo_valven'],
+                        "margem" => $dbdata['resumo_margem'],
+                        "representa" => $dbdata['resumo_presen'],
                     ];
                 }
                 if (!$existsale) {
                     Sale::insert($data);
                 } else {
-                    Sale::where('dtvenda', $dbdata['DTVENDA'])->where('cnpj', $dbdata['CNPJ'])->update(
+                    Sale::where('dtvenda', $dbdata['resumo_datmvt'])->where('cnpj', $dbdata['resumo_cnpj'])->update(
                         [
-                            "dtvenda" => $dbdata['DTVENDA'],
-                            "valdevolucao" => $dbdata['VALDEVOLUCAO'],
-                            "valvenda" => $dbdata['VALVENDA'],
-                            "margem" => $dbdata['MARGEM'],
-                            "representa" => $dbdata['REPRESENTA'],
+                            "dtvenda" => $dbdata['resumo_datmvt'],
+                            "valdevolucao" => $dbdata['resumo_valdev'],
+                            "valvenda" => $dbdata['resumo_valven'],
+                            "margem" => $dbdata['resumo_margem'],
+                            "representa" => $dbdata['resumo_presen'],
                         ]
                     );
                 }
@@ -65,42 +65,42 @@ class JsonToDatabaseController extends Controller
 
         if ($req["type"] === "assoc") {
             foreach ($req["dbdata"] as $dbdata) {
-                $compid = Company::where('cnpj', $dbdata["CNPJ"])->first()->id;
-                $existcnpj = Company::where('cnpj', $dbdata["CNPJ"])->exists();
+                $existcnpj = Company::where('cnpj', $dbdata["assoc_cnpj"])->exists();
                 if (!$existcnpj) {
-
+                    
                     return response()->json([
                         "response" => [
                             "message" => "CNPJ Inexistente na base de dados de filiais (associações)!",
                         ],
                     ], 201);
                 } else {
-                    $existassoc = Association::where('dtvenda', $dbdata['DTVENDA'])->where('cnpj', $dbdata["CNPJ"])->exists();
+                    $compid = Company::where('cnpj', $dbdata["assoc_cnpj"])->first()->id;
+                    $existassoc = Association::where('dtvenda', $dbdata['assoc_datmvt'])->where('cnpj', $dbdata["assoc_cnpj"])->exists();
                     $data[] = [
                         "company_id" => $compid,
-                        "cnpj" => $dbdata['CNPJ'],
-                        "filial" => $dbdata['FILIAL'],
-                        "dtvenda" => $dbdata['DTVENDA'],
-                        "assoc" => $dbdata['ASSOCIACAO'],
-                        "descassoc" => $dbdata['DESCASSOC'],
-                        "valdevolucao" => $dbdata['VALDEVOLUCAO'],
-                        "valvenda" => $dbdata['VALVENDA'],
-                        "margem" => $dbdata['MARGEM'],
-                        "representa" => $dbdata['REPRESENTA'],
+                        "cnpj" => $dbdata['assoc_cnpj'],
+                        "filial" => $dbdata['assoc_filial'],
+                        "dtvenda" => $dbdata['assoc_datmvt'],
+                        "assoc" => $dbdata['assoc_ass'],
+                        "descassoc" => $dbdata['assoc_desass'],
+                        "valdevolucao" => $dbdata['assoc_valdev'],
+                        "valvenda" => $dbdata['assoc_valven'],
+                        "margem" => $dbdata['assoc_margem'],
+                        "representa" => $dbdata['assoc_repres'],
                     ];
                 }
                 if (!$existassoc) {
                     Association::insert($data);
                 } else {
-                    Association::where('dtvenda', $dbdata['DTVENDA'])->where('cnpj', $dbdata['CNPJ'])->update(
+                    Association::where('dtvenda', $dbdata['assoc_datmvt'])->where('cnpj', $dbdata['assoc_cnpj'])->update(
                         [
-                            "dtvenda" => $dbdata['DTVENDA'],
-                            "assoc" => $dbdata['ASSOCIACAO'],
-                            "descassoc" => $dbdata['DESCASSOC'],
-                            "valdevolucao" => $dbdata['VALDEVOLUCAO'],
-                            "valvenda" => $dbdata['VALVENDA'],
-                            "margem" => $dbdata['MARGEM'],
-                            "representa" => $dbdata['REPRESENTA'],
+                            "dtvenda" => $dbdata['assoc_datmvt'],
+                            "assoc" => $dbdata['assoc_ass'],
+                            "descassoc" => $dbdata['assoc_desass'],
+                            "valdevolucao" => $dbdata['assoc_valdev'],
+                            "valvenda" => $dbdata['assoc_valven'],
+                            "margem" => $dbdata['assoc_margem'],
+                            "representa" => $dbdata['assoc_repres'],
                         ]
                     );
                 }
@@ -117,38 +117,38 @@ class JsonToDatabaseController extends Controller
         if ($req["type"] === "meta") {
             foreach ($req["dbdata"] as $dbdata) {
 
-                $compid = Company::where('cnpj', $dbdata["CNPJ"])->first()->id;
-                $existcnpj = Company::where('cnpj', $dbdata["CNPJ"])->exists();
-                $sales = Sale::where('cnpj', $dbdata["CNPJ"])->get();
-                $sumsales = $sales->sum('valvenda');
+                $existcnpj = Company::where('cnpj', $dbdata["meta_cnpj"])->exists();
                 if (!$existcnpj) {
-
+                    
                     return response()->json([
                         "response" => [
                             "message" => "CNPJ Inexistente na base de dados de filiais (metas)!",
                         ],
                     ], 201);
                 } else {
-                    $existmeta = Goal::where('anomes', $dbdata['ANOMES'])->where('cnpj', $dbdata["CNPJ"])->exists();
+                    $compid = Company::where('cnpj', $dbdata["meta_cnpj"])->first()->id;
+                    $sales = Sale::where('cnpj', $dbdata["meta_cnpj"])->get();
+                    $sumsales = $sales->sum('valvenda');
+                    $existmeta = Goal::where('anomes', $dbdata['meta_anomes'])->where('cnpj', $dbdata["meta_cnpj"])->exists();
                     $data[] = [
                         "company_id" => $compid,
-                        "filial" => $dbdata['FILIAL'],
-                        "cnpj" => $dbdata['CNPJ'],
-                        "anomes" => $dbdata['ANOMES'],
+                        "filial" => $dbdata['meta_codfil'],
+                        "cnpj" => $dbdata['meta_cnpj'],
+                        "anomes" => $dbdata['meta_anomes'],
                         "faturamento" => $sumsales,
-                        "valormeta" => $dbdata['VALORMETA'],
-                        "metajuros" => $dbdata['METAJUROS'],
+                        "valormeta" => $dbdata['meta_valmeta'],
+                        "metajuros" => $dbdata['meta_valjuros'],
                     ];
                 }
                 if (!$existmeta) {
                     Goal::insert($data);
                 } else {
-                    Goal::where('anomes', $dbdata['ANOMES'])->where('cnpj', $dbdata['CNPJ'])->update(
+                    Goal::where('anomes', $dbdata['meta_anomes'])->where('cnpj', $dbdata['meta_cnpj'])->update(
                         [
-                            "anomes" => $dbdata['ANOMES'],
+                            "anomes" => $dbdata['meta_anomes'],
                             "faturamento" => $sumsales,
-                            "valormeta" => $dbdata['VALORMETA'],
-                            "metajuros" => $dbdata['METAJUROS'],
+                            "valormeta" => $dbdata['meta_valmeta'],
+                            "metajuros" => $dbdata['meta_valjuros'],
                         ]
                     );
                 }
