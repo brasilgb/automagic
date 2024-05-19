@@ -49,7 +49,7 @@ export default function Login() {
             <div className="w-10/12 md:w-1/4 p-4 bg-white shadow-sm overflow-hidden rounded">
                 <div className='flex items-center justify-center py-8'>
                     <Link href="/">
-                        <ApplicationLogo width="w-32" />
+                        <ApplicationLogo />
                     </Link>
                 </div>
 

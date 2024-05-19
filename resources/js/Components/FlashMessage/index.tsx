@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { IconContext } from "react-icons";
 import { IoInformationCircleOutline } from "react-icons/io5";
 
-const FlashMessage = ({ message }) => {
+const FlashMessage = ({ message }:any) => {
     return (
         <Fragment>
             {message.message && (
