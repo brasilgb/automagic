@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 
 class JsonToDatabaseController extends Controller
 {
-
     public function index(Request $request)
     {
         $req = $request->all();
