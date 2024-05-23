@@ -16,7 +16,7 @@ const Profile = () => {
 
     return (
         <>
-            <div className="relative">
+            <div className="relative md:flex hidden">
                 <button
                     className="flex items-center justify-between px-2"
                     onClick={toggle}
@@ -29,7 +29,7 @@ const Profile = () => {
                     </div>
                 </button>
                 <div
-                    className={`absolute top-11 right-0 z-30 w-[350px] flex flex-col py-4 bg-gray-50 rounded-md shadow-lg border border-white ${transClass}`}
+                    className={`absolute top-11 right-0 z-30 md:w-[350px] flex flex-col py-4 bg-gray-50 rounded-md shadow-lg border border-white ${transClass}`}
                 >
                     <span
                         className="text-sm text-gray-600 px-4 pb-3 flex items-center"

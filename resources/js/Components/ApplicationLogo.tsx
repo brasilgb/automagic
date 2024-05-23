@@ -1,6 +1,18 @@
-const ApplicationLogo = () => {
-    return (
-        <img src="/storage/images/automahost.png" alt="Logo" className="w-10" />
-    );
+import { usePage } from "@inertiajs/react";
+interface ApplicationLogoProps {
+    className?: string;
 }
+const ApplicationLogo = ({className}: ApplicationLogoProps) => {
+    const { conf = [] } = usePage().props as any;
+
+    return (
+            <div className={className}>
+                <img
+                src={`/storage/images/${conf[0]?.logo ? conf[0]?.logo : "default.png"}`}
+                alt="Logo"
+            />
+            </div>
+    );
+};
+
 export default ApplicationLogo;

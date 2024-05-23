@@ -4,7 +4,6 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
-import AuthLayout from "@/Layouts/AuthLayout";
 
 export default function ForgotPassword({ status }: { status?: string }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -18,11 +17,12 @@ export default function ForgotPassword({ status }: { status?: string }) {
     };
 
     return (
-        <AuthLayout>
+        <GuestLayout>
             <Head title="Forgot Password" />
 
             <div className="mb-4 text-sm text-gray-600">
-            Esqueceu sua senha? Sem problemas. Basta nos informar seu endereço de e-mail e enviaremos por e-mail um link de redefinição de senha que permitirá que você escolha uma nova.
+                Forgot your password? No problem. Just let us know your email address and we will email you a password
+                reset link that will allow you to choose a new one.
             </div>
 
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
@@ -41,11 +41,11 @@ export default function ForgotPassword({ status }: { status?: string }) {
                 <InputError message={errors.email} className="mt-2" />
 
                 <div className="flex items-center justify-end mt-4">
-                    <PrimaryButton className="w-full" disabled={processing}>
-                    Enviar link de redefinição de senha
+                    <PrimaryButton className="ms-4" disabled={processing}>
+                        Email Password Reset Link
                     </PrimaryButton>
                 </div>
             </form>
-        </AuthLayout>
+        </GuestLayout>
     );
 }

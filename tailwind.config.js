@@ -16,17 +16,14 @@ export default {
                 roboto: ["Roboto", "sans-serif"],
             },
             colors: {
-                blue: {
-                    terciary: "#617C8D",
-                    secundary: "#0174BE",
-                    primary: "#0C356A",
-                },
-                red: {
-                    primary: "#CA0156",
-                },
-                megb: {
-                    yellow: "#EEA917",
-                },
+                "megb-blue-login": "#008ECC",
+                "megb-blue-plus": "#2E3247",
+                "megb-blue-primary": "#0C356A",
+                "megb-blue-secundary": "#0F52BA",
+                "megb-blue-terciary": "#0E4D92",
+                "megb-yellow-primary": "#FF5003",
+                "megb-yellow-secundary": "#FFAE08",
+                "megb-red-primary": "#CA0156",
             },
         },
     },

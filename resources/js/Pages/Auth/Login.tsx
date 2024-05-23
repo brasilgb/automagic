@@ -1,18 +1,14 @@
 import { useEffect, FormEventHandler, useState } from 'react';
 import Checkbox from '@/Components/Checkbox';
-import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
+import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import AuthButton from '@/Components/AuthButton';
-import { IoEye, IoEyeOff } from 'react-icons/io5';
+import { Head, Link, useForm } from '@inertiajs/react';
+import AuthLayout from "@/Layouts/AuthLayout";
+import { IoAtOutline, IoEyeOffOutline, IoEyeOutline, IoLockClosedOutline } from "react-icons/io5";
 
-export default function Login() {
-    const { user } = usePage().props as any;
-    const [showPassword, setShowPassword] = useState(false);
-
+export default function Login({ status, canResetPassword }: { status?: string, canResetPassword: boolean }) {
+    const[showPassword, setShowPassword] = useState<boolean>(false);
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -32,101 +28,74 @@ export default function Login() {
     };
 
     return (
-        <GuestLayout>
-            <Head title="Login" />
-            {!user?.exists &&
-                <div
-                    className='w-10/12 md:w-1/4 flex flex-col items-center justify-center bg-white mb-4 shadow-sm rounded py-4'>
-                    <h1 className=' text-red-500 mb-4 font-bold uppercase'>Não há usuários cadastrados</h1>
-                    <Link
-                        className='bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded shadow-sm duration-300 font-bold'
-                        href={route('register')}
-                    >
-                        Cadastrar usuário administrador
-                    </Link>
-                </div>
-            }
-            <div className="w-10/12 md:w-1/4 p-4 bg-white shadow-sm overflow-hidden rounded">
-                <div className='flex items-center justify-center py-8'>
-                    <Link href="/">
-                        <ApplicationLogo />
-                    </Link>
+        <AuthLayout>
+            <Head title="Entrar" />
+
+            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+
+            <form onSubmit={submit}>
+                <div className="relative">
+                    <IoAtOutline size={22} className="absolute top-2.5 left-1 text-gray-400" />
+                    <TextInput
+                        id="email"
+                        type="email"
+                        name="email"
+                        value={data.email}
+                        className="mt-1 pl-8 block w-full text-sm p-2.5"
+                        autoComplete="username"
+                        isFocused={true}
+                        onChange={(e) => setData('email', e.target.value)}
+                        placeholder="E-mail"
+                    />
+
+                    <InputError message={errors.email} className="mt-2" />
                 </div>
 
-                <form onSubmit={submit}>
-                    <div>
-                        <label className='label-form' htmlFor="email">E-mail</label>
-                        <TextInput
-                            id="email"
-                            type="email"
-                            name="email"
-                            value={data.email}
-                            className="mt-1 block w-full"
-                            autoComplete="username"
-                            isFocused={true}
-                            onChange={(e) => setData('email', e.target.value)}
+                <div className="mt-6 relative">
+                    <IoLockClosedOutline size={22} className="absolute top-2.5 left-1 text-gray-400" />
+                    <TextInput
+                        id="password"
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        value={data.password}
+                        className="mt-1 pl-8 block w-full text-sm p-2.5"
+                        autoComplete="current-password"
+                        onChange={(e) => setData('password', e.target.value)}
+                        placeholder="Senha"
+                    />
+                    {showPassword 
+                    ? <IoEyeOffOutline size={22} className="absolute top-2.5 right-1 text-gray-400 cursor-pointer" onClick={() => setShowPassword(false)} />
+                    : <IoEyeOutline size={22} className="absolute top-2.5 right-1 text-gray-400 cursor-pointer" onClick={() => setShowPassword(true)} />
+                    }
+                    <InputError message={errors.password} className="mt-2" />
+                </div>
+
+                <div className="flex items-center justify-between mt-6">
+                    <label className="flex items-center">
+                        <Checkbox
+                            name="remember"
+                            checked={data.remember}
+                            onChange={(e) => setData('remember', e.target.checked)}
                         />
-
-                        <InputError message={errors.email} className="mt-2" />
-                    </div>
-
-                    <div className="mt-4">
-                        <label className='label-form' htmlFor="email">Senha</label>
-                        <div className="flex items-center justify-between relative">
-                            <TextInput
-                                id="password"
-                                type={
-                                    showPassword
-                                        ? "text"
-                                        : "password"
-                                } name="password"
-                                value={data.password}
-                                className="mt-1 block w-full"
-                                autoComplete="current-password"
-                                onChange={(e) => setData('password', e.target.value)}
-                            />
-                            <div
-                                className="absolute right-2 cursor-pointer text-gray-500"
-                                onClick={() =>
-                                    setShowPassword(
-                                        (state) => !state,
-                                    )
-                                }
-                            >
-                                {showPassword ? (
-                                    <IoEyeOff size={24} />
-                                ) : (
-                                    <IoEye size={24} />
-                                )}
-                            </div>
-                        </div>
-                        <InputError message={errors.password} className="mt-2" />
-                    </div>
-
-                    <div className="flex items-center justify-between mt-4">
-                        <label className="flex items-center">
-                            <Checkbox
-                                name="remember"
-                                checked={data.remember}
-                                onChange={(e) => setData('remember', e.target.checked)}
-                            />
-                            <span className="ms-2 text-sm text-gray-600">Lembrar-me</span>
-                        </label>
+                        <span className="ms-2 text-sm text-gray-600">Lembrar</span>
+                    </label>
+                    {canResetPassword && (
                         <Link
                             href={route('password.request')}
                             className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                             Perdeu sua senha?
                         </Link>
-                    </div>
+                    )}
+                </div>
 
-                    <div className="flex items-center justify-center mt-4">
-                        <AuthButton className="" disabled={processing}>
-                            Entrar
-                        </AuthButton>
-                    </div>
-                </form>
-            </div>
-        </GuestLayout>
+                <div className="flex items-center justify-center mt-4">
+
+                    <PrimaryButton className="w-full" disabled={processing}>
+                        Entrar
+                    </PrimaryButton>
+                </div>
+            </form>
+        </AuthLayout>
     );
 }
