@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import SideMenu from "../SideMenu";
+import { Link } from "@inertiajs/react";
+import { IoExit } from "react-icons/io5";
 
 const MenuButton = () => {
     const [openMenu, setOpenMenu] = useState<boolean>(false);
@@ -36,7 +39,16 @@ const MenuButton = () => {
                 </button>
             </div>
             <div className={`fixed top-12 right-0 bottom-12 left-0 bg-white z-10 transition-transform ${!openMenu ? '-translate-x-full' : '-translate-x-0'}`}>
-
+                <SideMenu openSide={openMenu} />
+                <Link
+                    href={route('logout')}
+                    method="post"
+                    as="button"
+                    className="flex items-center h-10 p-2 text-sm gap-x-2 text-gray-500 hover:bg-gray-100 px-3 w-full"
+                >
+                    <IoExit size={20} />
+                    <span className="origin-left duration-300">Sair</span>
+                </Link>
             </div>
         </>
     );

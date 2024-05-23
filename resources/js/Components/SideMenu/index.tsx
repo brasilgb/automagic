@@ -1,15 +1,16 @@
 import React from 'react'
 import SideLink from "../SideLink";
 import { GiReceiveMoney } from "react-icons/gi";
-import { IoColorPalette, IoHome } from "react-icons/io5";
+import { IoColorPalette, IoHome, IoPerson } from "react-icons/io5";
 import { IoIosBusiness } from "react-icons/io";
+import { usePage } from "@inertiajs/react";
 
 interface SideMenuProps {
     openSide: any;
 }
 
 const SideMenu = (props: SideMenuProps) => {
-    const { auth } = usePage
+    const { auth } = usePage().props as any;
     return (
         <ul className='mt-12 flex flex-col gap-2'>
             <SideLink

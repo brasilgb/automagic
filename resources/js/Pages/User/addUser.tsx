@@ -52,7 +52,7 @@ const addUser = ({companies}: any) => {
   return (
     <AuthenticatedLayout>
       <Head title="Dashboard" />
-      <main className='animate__animated animate__fadeIn p-6'>
+      <main className='animate__animated animate__fadeIn'>
         <Card>
           <HeaderContent>
             <TitleTop>

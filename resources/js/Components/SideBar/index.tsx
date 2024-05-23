@@ -5,7 +5,6 @@ import SideMenu from "../SideMenu";
 
 const SideBar = () => {
     const [openSide, setOpenSide] = useState(true);
-
     return (
         <aside className={`transition-all duration-300 ${openSide ? "md:w-72" : "w-20"} h-full md:block hidden relative bg-megb-blue-primary duration-300 p-5 pt-8 shadow-lg`}>
 

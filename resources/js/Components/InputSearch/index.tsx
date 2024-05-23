@@ -19,7 +19,7 @@ const InputSearch = ({ placeholder, url, date }: SearchProps) => {
     }
 
     return (
-        <div className=" w-96 border border-gray-300 rounded-md pl-2 py-1">
+        <div className=" md:w-96 w-40 border border-gray-300 rounded-md pl-2 py-1">
             <form
                 onSubmit={handleSubmit}
                 className="flex items-center justify-between"

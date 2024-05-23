@@ -34,7 +34,7 @@ export const TableRow = ({ children, className, key }: TableProps) => {
 export const TableHead = ({ children, className }: TableProps) => {
     return (
         <th
-            className={`text-left py-3 px-2 text-gray-50 ${className}`}
+            className={`text-left py-2 px-2 text-gray-50 ${className}`}
         >
             {children}
         </th>

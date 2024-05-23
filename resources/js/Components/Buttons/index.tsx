@@ -54,33 +54,6 @@ export const AddButton = ({ url, label }: ButtonsProps) => {
     );
 };
 
-export const MessageLidaButton = ({ url, id, sttmessage }: ButtonsProps) => {
-    const { patch } = useForm({
-        status: sttmessage === 0 ? 1 : 0,
-    });
-
-    const handleMessageRead = (e: any) => {
-        e.preventDefault();
-        patch(route(url, id));
-    };
-
-    return (
-        <Link
-            className="flex items-center justify-center bg-gray-50 hover:bg-gray-100 py-1.5 px-3 rounded-md shadow text-gray-50 self-end"
-            href="#"
-            onClick={handleMessageRead}
-            as="button"
-            type="button"
-            title={sttmessage === 0 ? "Marcar como lida" : "Mensagem lida"}
-        >
-            <IoCheckmarkDone
-                size={22}
-                color={sttmessage === 0 ? "#6b6b6b" : "#2a82ca"}
-            />
-        </Link>
-    );
-};
-
 export const BackButton = ({ url, label }: ButtonsProps) => {
     return (
         <Link
@@ -91,129 +64,6 @@ export const BackButton = ({ url, label }: ButtonsProps) => {
         >
             <IoArrowBackOutline size={18} />
             <span>{label}</span>
-        </Link>
-    );
-};
-
-export const PrintButton = ({ url, status }: ButtonsProps) => {
-    const [openMenuButton, setOpenMenuButton] = useState(false);
-    return (
-        <>
-            <button
-                className="relative flex items-center justify-center bg-zinc-600 hover:bg-zinc-500 py-1.5 px-3 rounded-md shadow text-gray-50 self-end"
-                onClick={() => setOpenMenuButton(!openMenuButton)}
-                title={`Imprimir recibo`}
-            >
-                <IoPrint size={18} />
-            </button>
-            {openMenuButton && (
-                <div className="absolute w-full flex items-center justify-center bg-gray-700 bg-opacity-10 top-0 right-0 bottom-0 left-0 z-50">
-                    <div className="w-1/4 bg-gray-50 border border-white rounded-md shadow-lg">
-                        <div className="h-10 flex items-center justify-between border-b px-2 bg-blue-600 text-white rounded-t-lg">
-                            <IoPrint size={20} />
-                            <h1 className="ml-2 flex-1 text-base font-semibold">
-                                Selecione o documento para impressão
-                            </h1>
-                            <button onClick={() => setOpenMenuButton(false)}>
-                                <IoClose size={20} />
-                            </button>
-                        </div>
-                        <ul className="p-2 text-base text-blue-middle font-medium flex flex-col gap-2">
-                            <li
-                                className={`${status == "1" ? "bg-gray-300 hover:bg-gray-200 text-blue-light" : "text-gray-200"} rounded-md text-center border border-white shadow transition-all duration-300`}
-                            >
-                                <Link
-                                    disabled={status == "1" ? false : true}
-                                    as="button"
-                                    href={`/docs/printer?or=${url}&tp=1`}
-                                    className="py-1.5 w-full"
-                                >
-                                    Recibo entrada
-                                </Link>
-                            </li>
-                            <li
-                                className={`${status == "8" ? "bg-gray-300 hover:bg-gray-200 text-blue-light" : "text-gray-200"} rounded-md text-center border border-white shadow transition-all duration-300`}
-                            >
-                                <Link
-                                    disabled={status == "8" ? false : true}
-                                    as="button"
-                                    href={`/docs/printer?or=${url}&tp=2`}
-                                    className="py-1.5 w-full"
-                                >
-                                    Recibo Saída
-                                </Link>
-                            </li>
-                            <li
-                                className={`${status == "3" ? "bg-gray-300 hover:bg-gray-200 text-blue-light" : "text-gray-200"} rounded-md text-center border border-white shadow transition-all duration-300`}
-                            >
-                                <Link
-                                    disabled={status == "3" ? false : true}
-                                    as="button"
-                                    href={`/docs/printer?or=${url}&tp=3`}
-                                    className="py-1.5 w-full"
-                                >
-                                    Orçamento
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            )}
-        </>
-    );
-};
-
-export const WhatsAppButton = ({ url }: ButtonsProps) => {
-    return (
-        <a
-            className="flex items-center justify-center bg-green-600 hover:bg-green-500 py-1.5 px-3 rounded-md shadow text-gray-50 self-end"
-            href={url}
-            target="_blank"
-            title={`Enviar mensagem`}
-        >
-            <IoLogoWhatsapp size={18} />
-        </a>
-    );
-};
-
-export const ImagesAppButton = ({ url }: ButtonsProps) => {
-    return (
-        <Link
-            className="flex items-center justify-center bg-sky-700 hover:bg-sky-600 py-1.5 px-3 rounded-md shadow text-gray-50 self-end"
-            href={`/imagens?or=${url}`}
-            as="button"
-            type="button"
-            title={`Imagens da ordem`}
-        >
-            <IoImageSharp size={18} />
-        </Link>
-    );
-};
-
-export const AgendaClienteButton = ({ url }: ButtonsProps) => {
-    return (
-        <Link
-            className="flex items-center justify-center bg-teal-600 hover:bg-teal-500 py-1.5 px-3 rounded-md shadow text-gray-50 self-end"
-            href={url}
-            as="button"
-            type="button"
-            title={`Acessar agendamento`}
-        >
-            <FaCalendarDays size={18} />
-        </Link>
-    );
-};
-
-export const OrderButton = ({ url }: ButtonsProps) => {
-    return (
-        <Link
-            className="flex items-center justify-center bg-zinc-600 hover:bg-zinc-500 py-1.5 px-3 rounded-md shadow text-gray-50 self-end"
-            href={url}
-            as="button"
-            type="button"
-            title={`Ordens do cliente`}
-        >
-            <IoConstruct size={18} />
         </Link>
     );
 };
@@ -249,7 +99,7 @@ export const DeleteButton = ({ identify, param, url }: ButtonsProps) => {
                 onClick={() => setShowConfirme(false)}
                 className={`fixed z-20 top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-gray-500 bg-opacity-40`}
             >
-                <div className="w-1/4 bg-gray-50 rounded-md shadow-md border border-white">
+                <div className="md:w-1/4 w-full mx-2 bg-gray-50 rounded-md shadow-md border border-white">
                     <div className="text-gray-400 flex justify-end pt-0.5 pr-0.5">
                         <button onClick={() => setShowConfirme(false)}>
                             <IoClose size={18} />

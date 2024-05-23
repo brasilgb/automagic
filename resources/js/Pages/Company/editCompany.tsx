@@ -52,7 +52,7 @@ console.log(flash);
   return (
     <AuthenticatedLayout>
       <Head title="Dashboard" />
-      <main className='animate__animated animate__fadeIn p-6'>
+      <main className='animate__animated animate__fadeIn'>
         <Card>
           <HeaderContent>
             <TitleTop>
@@ -159,7 +159,7 @@ console.log(flash);
                     </div>
 
                   </div>
-                  <div className="grid md:grid-cols-6 gap-4 mt-6">
+                  <div className="grid md:grid-cols-6 gap-4 md:mt-6 mt-4">
                     <div className="flex flex-col">
                       <label
                         className="label-form"
@@ -183,7 +183,7 @@ console.log(flash);
                       )}
                     </div>
 
-                    <div className="flex flex-col col-span-2">
+                    <div className="flex flex-col md:col-span-2">
                       <label
                         className="label-form"
                         htmlFor="subname"
@@ -233,7 +233,7 @@ console.log(flash);
                       )}
                     </div>
 
-                    <div className="flex flex-col col-span-2">
+                    <div className="flex flex-col md:col-span-2">
                       <label
                         className="label-form"
                         htmlFor="address"
@@ -259,7 +259,7 @@ console.log(flash);
 
                   </div>
 
-                  <div className="grid grid-cols-6 gap-4 mt-6">
+                  <div className="grid md:grid-cols-6 gap-4 md:mt-6 mt-4">
                     <div className="flex flex-col">
                       <label
                         className="label-form"
@@ -283,7 +283,7 @@ console.log(flash);
                       )}
                     </div>
 
-                    <div className="flex flex-col col-span-2">
+                    <div className="flex flex-col md:col-span-2">
                       <label
                         className="label-form"
                         htmlFor="county"
@@ -332,7 +332,7 @@ console.log(flash);
                       )}
                     </div>
 
-                    <div className="flex flex-col col-span-2">
+                    <div className="flex flex-col md:col-span-2">
                       <label
                         className="label-form"
                         htmlFor="neighborhood"
@@ -359,7 +359,7 @@ console.log(flash);
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-4 gap-4 mt-6">
+                  <div className="grid md:grid-cols-4 gap-4 md:mt-6 mt-4">
                     <div className="flex flex-col">
                       <label
                         className="label-form"
@@ -459,7 +459,7 @@ console.log(flash);
                     </div>
                   </div>
 
-                  <div className="mt-6">
+                  <div className="md:mt-6 mt-4">
                     <div className="flex flex-col">
                       <label
                         className="label-form"

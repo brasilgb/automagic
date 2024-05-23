@@ -17,7 +17,7 @@ console.log(goals);
   return (
     <AuthenticatedLayout>
       <Head title="Dashboard" />
-      <main className='animate__animated animate__fadeIn p-6'>
+      <main className='animate__animated animate__fadeIn'>
         <HeaderContent>
           <TitleTop>
             <AiOutlineDashboard size={30} />

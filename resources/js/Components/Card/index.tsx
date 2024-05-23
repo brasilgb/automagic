@@ -15,7 +15,7 @@ export const Card = ({ children, className }: CardProps) => {
 
 export const CardHeader = ({ children }: CardProps) => {
     return (
-        <div className="flex items-center justify-between bg-white p-2 rounded-t-md">
+        <div className="flex items-center justify-between bg-white p-2 rounded-t-md border-b border-b-gray-200">
             {children}
         </div>
     );
@@ -26,7 +26,7 @@ export const CardHeaderContent = ({ children, className }: CardProps) => {
 };
 
 export const CardBody = ({ children, className }: CardProps) => {
-    return <div className={`bg-white ${className}`}>{children}</div>;
+    return <div className={`overflow-x-auto bg-white ${className}`}>{children}</div>;
 };
 
 export const CardFooter = ({ children, className }: CardProps) => {
