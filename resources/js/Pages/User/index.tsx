@@ -6,15 +6,12 @@ import { BreadCrumbTop, HeaderContent, TitleTop } from "@/Components/PageTop"
 import Pagination from "@/Components/Pagination"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/Components/Table"
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
-import { roleUserByValue } from "@/Utils/functions"
-import { maskCnpj, maskInscEstadual } from "@/Utils/mask"
 import { Head, usePage } from '@inertiajs/react'
 import moment from "moment"
 import React, { Fragment } from 'react'
 import { IoPeopleSharp } from "react-icons/io5"
 
 const User = ({ users }: any) => {
-    const { flash } = usePage().props;
 
     return (
         <AuthenticatedLayout>

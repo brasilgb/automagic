@@ -41,13 +41,13 @@ const SideMenu = (props: SideMenuProps) => {
                 />
             }
 
-            <SideLink
+            {/* <SideLink
                 url={route('companies.index')}
                 icon={<IoColorPalette size={24} />}
                 openSide={props.openSide}
                 active={route().current('companies.index')}
                 label="Aparência"
-            />
+            /> */}
 
             <SideLink
                 url={route('users.index')}
