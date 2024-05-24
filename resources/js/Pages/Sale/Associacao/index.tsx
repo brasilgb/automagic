@@ -9,7 +9,7 @@ interface AssociationProps {
 
 const Association = ({data}: AssociationProps) => {
   return (
-    <Table className="bg-blue-secundary rounded-t-md w-full">
+    <Table className="bg-megb-blue-secundary rounded-t-md w-full">
     <TableHeader>
       <TableRow>
         <TableHead>#</TableHead>

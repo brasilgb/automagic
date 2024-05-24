@@ -7,7 +7,7 @@ interface FaturamentoProps {
 }
 const Faturamento = ({data}: FaturamentoProps) => {
   return (
-    <Table className="bg-blue-secundary rounded-t-md w-full">
+    <Table className="bg-megb-blue-secundary rounded-t-md w-full">
     <TableHeader>
       <TableRow>
         <TableHead>#</TableHead>
