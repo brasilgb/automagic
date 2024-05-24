@@ -79,7 +79,7 @@ const addUser = ({companies}: any) => {
               <CardBody className=" border-y border-gray-100">
                 <div className="px-3 my-4">
 
-                  <div className="grid grid-cols-6 gap-4">
+                  <div className="grid md:grid-cols-6 gap-4">
                     <div className="flex flex-col col-span-2 relative">
                       <label
                         className="label-form"
@@ -183,7 +183,7 @@ const addUser = ({companies}: any) => {
 
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4 mt-6">
+                  <div className="grid md:grid-cols-2 gap-4 md:mt-6 mt-4">
                     <div className="flex flex-col">
                       <label
                         className="label-form"
@@ -279,7 +279,7 @@ const addUser = ({companies}: any) => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4 mt-6">
+                  <div className="grid md:grid-cols-2 gap-4 md:mt-6 mt-4">
                     <div className="flex flex-col">
                       <label
                         className="label-form"
