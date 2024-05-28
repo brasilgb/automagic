@@ -16,7 +16,7 @@ class JsonToDatabaseController extends Controller
     {
 
         $req = $request->all();
-        
+
         if ($req["type"] === "total") {
             foreach ($req["dbdata"] as $dbdata) {
                 $existcnpj = Company::where('cnpj', $dbdata["total_cnpj"])->exists();
@@ -28,8 +28,7 @@ class JsonToDatabaseController extends Controller
                     ], 201);
                 } else {
                     $compid = Company::where('cnpj', $dbdata["total_cnpj"])->first()->id;
-                    $existtotal = Total::where('datatu', $dbdata['total_datatu'])->where('cnpj', $dbdata["total_cnpj"])->exists();
-
+                    $existtotal = Sale::where('dtvenda', $dbdata['total_datatu'])->where('cnpj', $dbdata["total_cnpj"])->exists();
                     $data[] = [
                         "company_id" => $compid,
                         "cnpj" => $dbdata['total_cnpj'],
@@ -43,13 +42,13 @@ class JsonToDatabaseController extends Controller
                         "perjur" => $dbdata['total_perjur'],
                         "valina" => $dbdata['total_valina'],
                         "perina" => $dbdata['total_perina'],
-                        "valest" => $dbdata['total_valest'],
+                        "valest" => $dbdata['total_valest']
                     ];
                 }
                 if (!$existtotal) {
                     Total::insert($data);
                 } else {
-                    Total::where('datatu', $dbdata['total_datatu'])->where('cnpj', $dbdata['total_cnpj'])->update(
+                    Total::where('dtvenda', $dbdata['total_datatu'])->where('cnpj', $dbdata['total_cnpj'])->update(
                         [
                             "datatu" => $dbdata['total_datatu'],
                             "valdev" => $dbdata['total_valdev'],
@@ -65,14 +64,14 @@ class JsonToDatabaseController extends Controller
                         ]
                     );
                 }
-                return response()->json([
-                    "response" => [
-                        "message" => "Totais cadastrados com sucesso!",
-                        "success" => true,
-                        "status" => 201,
-                    ],
-                ], 201);
             }
+            return response()->json([
+                "response" => [
+                    "message" => "Totais cadastrados com sucesso!",
+                    "success" => true,
+                    "status" => 201,
+                ],
+            ], 201);
         }
 
         if ($req["type"] === "venda") {
