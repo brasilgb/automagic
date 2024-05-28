@@ -6,6 +6,7 @@ use App\Models\Association;
 use App\Models\Company;
 use App\Models\Goal;
 use App\Models\Sale;
+use App\Models\Total;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -14,12 +15,14 @@ class HomeController extends Controller
     {
         $sales = Sale::first();
         $goals = Goal::first();
-        $associations = Association::first();
         $companies = Company::get();
+        $associations = Association::first();
+        $totals = Total::first();
         return Inertia::render('Home/index', [
             "sales" => $sales,
             "goals" => $goals,
             "associations" => $associations,
+            "totals" => $totals,
             "companies" => count($companies)
         ]);
     }
