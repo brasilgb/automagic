@@ -16,9 +16,9 @@ class Total extends Model
         "valven",
         "margem",
         "permet",
-        "projecao",
-        "valjuros",
-        "perfjuros",
+        "projec",
+        "valjur",
+        "perjur",
         "valina",
         "perina",
         "valest"

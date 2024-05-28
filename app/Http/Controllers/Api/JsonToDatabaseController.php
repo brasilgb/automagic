@@ -14,7 +14,67 @@ class JsonToDatabaseController extends Controller
 {
     public function index(Request $request)
     {
+
         $req = $request->all();
+        
+        if ($req["type"] === "total") {
+            foreach ($req["dbdata"] as $dbdata) {
+                $existcnpj = Company::where('cnpj', $dbdata["total_cnpj"])->exists();
+                if (!$existcnpj) {
+                    return response()->json([
+                        "response" => [
+                            "message" => "CNPJ Inexistente na base de dados de filiais (total)!",
+                        ],
+                    ], 201);
+                } else {
+                    $compid = Company::where('cnpj', $dbdata["total_cnpj"])->first()->id;
+                    $existtotal = Total::where('datatu', $dbdata['total_datatu'])->where('cnpj', $dbdata["total_cnpj"])->exists();
+
+                    $data[] = [
+                        "company_id" => $compid,
+                        "cnpj" => $dbdata['total_cnpj'],
+                        "datatu" => $dbdata['total_datatu'],
+                        "valdev" => $dbdata['total_valdev'],
+                        "valven" => $dbdata['total_valven'],
+                        "margem" => $dbdata['total_margem'],
+                        "permet" => $dbdata['total_permet'],
+                        "projec" => $dbdata['total_projec'],
+                        "valjur" => $dbdata['total_valjur'],
+                        "perjur" => $dbdata['total_perjur'],
+                        "valina" => $dbdata['total_valina'],
+                        "perina" => $dbdata['total_perina'],
+                        "valest" => $dbdata['total_valest'],
+                    ];
+                }
+                if (!$existtotal) {
+                    Total::insert($data);
+                } else {
+                    Total::where('datatu', $dbdata['total_datatu'])->where('cnpj', $dbdata['total_cnpj'])->update(
+                        [
+                            "datatu" => $dbdata['total_datatu'],
+                            "valdev" => $dbdata['total_valdev'],
+                            "valven" => $dbdata['total_valven'],
+                            "margem" => $dbdata['total_margem'],
+                            "permet" => $dbdata['total_permet'],
+                            "projec" => $dbdata['total_projec'],
+                            "valjur" => $dbdata['total_valjur'],
+                            "perjur" => $dbdata['total_perjur'],
+                            "valina" => $dbdata['total_valina'],
+                            "perina" => $dbdata['total_perina'],
+                            "valest" => $dbdata['total_valest']
+                        ]
+                    );
+                }
+                return response()->json([
+                    "response" => [
+                        "message" => "Totais cadastrados com sucesso!",
+                        "success" => true,
+                        "status" => 201,
+                    ],
+                ], 201);
+            }
+        }
+
         if ($req["type"] === "venda") {
             foreach ($req["dbdata"] as $dbdata) {
                 $existcnpj = Company::where('cnpj', $dbdata["resumo_cnpj"])->exists();
@@ -156,64 +216,6 @@ class JsonToDatabaseController extends Controller
             return response()->json([
                 "response" => [
                     "message" => "Metas cadastradas com sucesso!",
-                    "success" => true,
-                    "status" => 201,
-                ],
-            ], 201);
-        }
-
-        if ($req["type"] === "total") {
-            foreach ($req["dbdata"] as $dbdata) {
-                $existcnpj = Company::where('cnpj', $dbdata["total_cnpj"])->exists();
-                if (!$existcnpj) {
-
-                    return response()->json([
-                        "response" => [
-                            "message" => "CNPJ Inexistente na base de dados de filiais (total)!",
-                        ],
-                    ], 201);
-                } else {
-                    $compid = Company::where('cnpj', $dbdata["total_cnpj"])->first()->id;
-                    $existsale = Total::where('datatu', $dbdata['total_datatu'])->where('cnpj', $dbdata["total_cnpj"])->exists();
-                    $data[] = [
-                        "company_id" => $compid,
-                        "cnpj" => $dbdata['total_cnpj'],
-                        "datatu" => $dbdata['total_datatu'],
-                        "valdev" => $dbdata['total_valdev'],
-                        "valven" => $dbdata['total_valven'],
-                        "margem" => $dbdata['total_margem'],
-                        "permet" => $dbdata['total_permet'],
-                        "projec" => $dbdata['total_projec'],
-                        "valjur" => $dbdata['total_valjur'],
-                        "perjur" => $dbdata['total_perjur'],
-                        "valina" => $dbdata['total_valina'],
-                        "perina" => $dbdata['total_perina'],
-                        "valest" => $dbdata['total_valest'],
-                    ];
-                }
-                if (!$existsale) {
-                    Total::insert($data);
-                } else {
-                    Total::where('datatu', $dbdata['total_datatu'])->where('cnpj', $dbdata['total_cnpj'])->update(
-                        [
-                            "datatu" => $dbdata['total_datatu'],
-                            "valdev" => $dbdata['total_valdev'],
-                            "valven" => $dbdata['total_valven'],
-                            "margem" => $dbdata['total_margem'],
-                            "permet" => $dbdata['total_permet'],
-                            "projec" => $dbdata['total_projec'],
-                            "valjur" => $dbdata['total_valjur'],
-                            "perjur" => $dbdata['total_perjur'],
-                            "valina" => $dbdata['total_valina'],
-                            "perina" => $dbdata['total_perina'],
-                            "valest" => $dbdata['total_valest']
-                        ]
-                    );
-                }
-            }
-            return response()->json([
-                "response" => [
-                    "message" => "Totais cadastrados com sucesso!",
                     "success" => true,
                     "status" => 201,
                 ],
