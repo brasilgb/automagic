@@ -40,17 +40,17 @@ const Home = ({ goals, sales, associations, companies, totals }: any) => {
               <Kpi icon={<FaMoneyBillTrendUp size="50" />} iconcolor="text-yellow-700" title="Per. Ina." value={ValuePercent(totals?.perina)} bgcolor="bg-green-200" textcolor="text-green-700" /> */}
               </div>
               <div className="grid gap-6 md:grid-cols-4 grid-cols-2 mt-8">
-                <div>
-                  <Progress value={totals?.permet} colorBar="#000" colorText="#000" title='Meta' height={100} />
+                <div className='bg-white p-4 shadow-md rounded-md'>
+                  <Progress value={totals?.permet} colorBar="#FF5003" colorText="#FF5003" title='Meta' height={100} />
                 </div>
-                <div>
-                  <Progress value={totals?.margem} colorBar="#000" colorText="#000" title='Margem' height={100} />
+                <div className='bg-white p-4 shadow-md rounded-md'>
+                  <Progress value={totals?.margem} colorBar="#CA0156" colorText="#CA0156" title='Margem' height={100} />
                 </div>
-                <div>
-                  <Progress value={totals?.perjur} colorBar="#000" colorText="#000" title='Juros' height={100} />
+                <div className='bg-white p-4 shadow-md rounded-md'>
+                  <Progress value={totals?.perjur} colorBar="#0F52BA" colorText="#0F52BA" title='Juros' height={100} />
                 </div>
-                <div>
-                  <Progress value={totals?.perina} colorBar="#000" colorText="#000" title='Inadimplência' height={100} />
+                <div className='bg-white p-4 shadow-md rounded-md'>
+                  <Progress value={totals?.perina} colorBar="#FFAE08" colorText="#FFAE08" title='Inadimplência' height={100} />
                 </div>
               </div>
             </>

@@ -27,7 +27,7 @@ const Progress = ({
   const options = {
     chart: {
       type: 'pie',
-      height: `${sizeWindow > 1900 ? '180' : '150'}`,
+      height: `${sizeWindow > 1900 ? '180' : '160'}`,
       backgroundColor: 'rgba(255, 255, 255, 0)',
       plotBackgroundColor: 'rgba(255, 255, 255, 0)',
       borderWidth: 0,
