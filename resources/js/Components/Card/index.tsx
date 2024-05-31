@@ -20,7 +20,7 @@ export const CardHeader = ({ children }: CardProps) => {
         </div>
     );
 };
-
+ 
 export const CardHeaderContent = ({ children, className }: CardProps) => {
     return <div className={`${className}`}>{children}</div>;
 };

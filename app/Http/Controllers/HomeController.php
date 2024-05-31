@@ -17,11 +17,13 @@ class HomeController extends Controller
         $goals = Goal::first();
         $companies = Company::get();
         $associations = Association::first();
-        $totals = Total::first();
+        $totalsday = Total::first();
+        $totals = Total::get();
         return Inertia::render('Home/index', [
             "sales" => $sales,
             "goals" => $goals,
             "associations" => $associations,
+            "totalsday" => $totalsday,
             "totals" => $totals,
             "companies" => count($companies)
         ]);
