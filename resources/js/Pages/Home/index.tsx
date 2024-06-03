@@ -1,4 +1,4 @@
-import { Head, usePage } from '@inertiajs/react';
+import { Head, router, usePage } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { GiPayMoney } from "react-icons/gi";
 import { Kpi } from "@/Components/Kpis";
@@ -28,8 +28,8 @@ const Home = ({ goals, sales, associations, companies, totals, totalsday }: any)
         <div className="">
           {auth?.user?.company_id !== null &&
             <>
-            <div>
-            </div>
+              <div>
+              </div>
               <div className="grid gap-6 md:grid-cols-5">
                 <Kpi icon={<AiOutlineLineChart size="50" />} iconcolor="text-blue-700" title="Meta" value={MoneyptBR(goals?.valormeta)} bgcolor="bg-blue-200" textcolor="text-blue-700" />
                 <Kpi icon={<AiOutlineLineChart size="50" />} iconcolor="text-blue-700" title="Meta Juros" value={MoneyptBR(goals?.metajuros)} bgcolor="bg-blue-200" textcolor="text-blue-700" />
@@ -42,7 +42,7 @@ const Home = ({ goals, sales, associations, companies, totals, totalsday }: any)
               <Kpi icon={<FaMoneyBillTrendUp size="50" />} iconcolor="text-yellow-700" title="Per. Juros" value={ValuePercent(totalsday?.perjur)} bgcolor="bg-green-200" textcolor="text-green-700" />
               <Kpi icon={<FaMoneyBillTrendUp size="50" />} iconcolor="text-yellow-700" title="Per. Ina." value={ValuePercent(totalsday?.perina)} bgcolor="bg-green-200" textcolor="text-green-700" /> */}
               </div>
-              <div className="grid gap-6 md:grid-cols-4 grid-cols-2 mt-8">
+              <div className="grid gap-6 md:grid-cols-4 grid-cols-2 mt-4">
                 <div className='bg-white p-4 shadow-md rounded-md'>
                   <Progress value={totalsday?.permet} colorBar="#FF5003" colorText="#FF5003" title='Meta' height={100} />
                 </div>
@@ -56,7 +56,7 @@ const Home = ({ goals, sales, associations, companies, totals, totalsday }: any)
                   <Progress value={totalsday?.perina} colorBar="#FFAE08" colorText="#FFAE08" title='Inadimplência' height={100} />
                 </div>
               </div>
-              <div className="mt-4 p-2 bg-white rounded-md shadow-md my-4">
+              <div className="mt-4 p-2 flex flex-col bg-white rounded-md shadow-md my-4">
                 <CHFaturamento data={totals} />
               </div>
             </>

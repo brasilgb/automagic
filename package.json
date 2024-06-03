@@ -24,6 +24,7 @@
         "vite": "^5.0"
     },
     "dependencies": {
+        "@hassanmojab/react-modern-calendar-datepicker": "^3.1.7",
         "animate.css": "^4.1.1",
         "highcharts": "^11.4.3",
         "highcharts-react-official": "^3.2.1",

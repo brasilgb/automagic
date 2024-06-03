@@ -5,6 +5,7 @@ import moment from "moment";
 
 type Props = {
   data: any;
+  resize?: any;
 };
 
 const CHFaturamento = ({ data }: Props) => {
@@ -35,7 +36,6 @@ const CHFaturamento = ({ data }: Props) => {
 
   const options = {
     chart: {
-      width: "",
       marginRight: 0,
       inverted: width > 640 ? false : true,
     },
@@ -80,7 +80,7 @@ const CHFaturamento = ({ data }: Props) => {
       {
         // Secondary yAxis
         gridLineWidth: 0,
-        //softMax: 6000,
+        // softMax: 6000,
         title: {
           text: '',
           style: {
@@ -168,8 +168,8 @@ const CHFaturamento = ({ data }: Props) => {
         },
       },
     ],
-
   };
+  
   return (
     <Fragment>
       <HighchartsReact highcharts={Highcharts} options={options} />
