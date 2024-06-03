@@ -1,13 +1,27 @@
 import { MoneyptBR, ValuePercent } from "@/Components/Money";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/Components/Table";
+import { useAuthContext } from "@/Contexts";
+import { router } from "@inertiajs/react";
 import moment from "moment";
-import React from 'react'
+import React, { useEffect } from 'react'
 
 interface AssociationProps {
     data: any;
 }
 
 const Association = ({data}: AssociationProps) => {
+  const { selectedRange, dataInicial, dataFinal } = useAuthContext();
+
+  useEffect(() => {
+    if(selectedRange.to && selectedRange.from){
+      router.post('filtersale', {
+        'dtini': moment(dataInicial).format("YYYYMMDD"),
+        'dtfim': moment(dataFinal).format("YYYYMMDD")
+      })
+      
+    }
+  },[dataInicial, dataFinal, selectedRange]);
+
   return (
     <Table className="bg-megb-blue-secundary rounded-t-md w-full">
     <TableHeader>

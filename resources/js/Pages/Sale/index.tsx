@@ -1,9 +1,7 @@
-import { Card, CardBody, CardFooter } from "@/Components/Card"
-import { MoneyptBR, ValuePercent } from "@/Components/Money"
+import { Card, CardBody } from "@/Components/Card"
 import { HeaderContent, TitleTop } from "@/Components/PageTop"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/Components/Table'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
-import { Head, router } from '@inertiajs/react'
+import { Head } from '@inertiajs/react'
 import moment from 'moment'
 import React, { useState } from 'react'
 import { GiReceiveMoney } from "react-icons/gi"
@@ -11,17 +9,12 @@ import Faturamento from "./Faturamento"
 import { AnaliseButton } from "@/Components/Buttons"
 import Associacao from "./Associacao"
 import DatePickerMagic from "@/Components/DatePicker"
-import { useAuthContext } from "@/Contexts"
 
 const Sales = ({ sales, association }: any) => {
 const [alteredSales, setAlteredSales] = useState('faturamento');
-const { dataFiltro, dataInicial, dataFinal, selectedRange, setSelectedRange } = useAuthContext();
-// console.log(association);
-// console.log(dataFinal);
 
-const dateAssoc = association.filter((fd:any) => (fd.dtvenda == parseInt(moment(dataInicial).format("YYYYMMDD")) && fd.dtvenda == parseInt(moment(dataFinal).format("YYYYMMDD")) ));
-const dateSales = [];
-console.log(dateAssoc);
+const dateAssoc = association?.data;
+const dateSales = sales?.data;
 
   return (
     <AuthenticatedLayout>
@@ -43,7 +36,7 @@ console.log(dateAssoc);
         </HeaderContent>
         <CardBody className="rounded-md p-1">
           {alteredSales === 'faturamento' &&
-          <Faturamento data={sales} />
+          <Faturamento data={dateSales} />
           }
           {alteredSales === 'associacao' &&
           <Associacao data={dateAssoc} />

@@ -20,9 +20,7 @@ const Authenticated = ({ children }: LayoutProps) => {
                     <div className='min-h-screen flex flex-1 flex-col'>
                         <Header />
                         <div className='flex-grow p-4'>
-
                             {children}
-
                         </div>
                         <Footer />
                     </div>

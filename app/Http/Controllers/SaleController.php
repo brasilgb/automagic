@@ -15,8 +15,17 @@ class SaleController extends Controller
     {
         $user = Auth::user();
         $cnpj = Company::where('id', $user->company_id)->first()->cnpj;
-        $sales = Sale::where('company_id', '<>', 'null')->where('cnpj', $cnpj)->get();
-        $association = Association::where('company_id', '<>', 'null')->where('cnpj', $cnpj)->get();
+
+        $sales = Sale::where('company_id', '<>', 'null')->where('cnpj', $cnpj)->paginate(15);
+        $association = Association::where('company_id', '<>', 'null')->where('cnpj', $cnpj)->paginate(15);
+
+        return Inertia::render('Sale/index', ['sales' => $sales, 'association' => $association]);
+    }
+
+    public function filterSale(Request $request)
+    {
+        $sales = Sale::where('dtvenda', '>=', $request->dtini)->where('dtvenda', '<=', $request->dtfim)->paginate(15);
+        $association = Association::where('dtvenda', '>=', $request->dtini)->where('dtvenda', '<=', $request->dtfim)->paginate(15);
         return Inertia::render('Sale/index', ['sales' => $sales, 'association' => $association]);
     }
 }

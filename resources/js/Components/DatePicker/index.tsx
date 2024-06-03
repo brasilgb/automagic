@@ -8,7 +8,7 @@ import { CustomLocale } from "./LocaleCalendar";
 import { router } from "@inertiajs/react";
 import { useAuthContext } from "@/Contexts";
 
-const DatePickerMagic = () => {
+const DatePickerRange = () => {
   const { setDataInicial, setDataFinal, selectedRange, setSelectedRange } = useAuthContext();
 
 console.log();
@@ -48,12 +48,12 @@ console.log();
       onChange={setSelectedRange}
       inputPlaceholder={`${moment().format("DD/MM/YYYY")} - ${moment().format("DD/MM/YYYY")}`}
       formatInputText={formatInputRange}
-      inputClassName="!border-0 outline-none h-6 !bg-transparent !text-gray-400 !font-medium !text-xs !px-1" // custom class
+      inputClassName="px-3 py-1.5 w-48 text-xs font-bold shadow-md !border-2 !border-white !placeholder:text-white !text-white !bg-megb-blue-secundary rounded-md transition-colors duration-300" // custom class
       calendarClassName="responsive-calendar"
       shouldHighlightWeekends
       locale={CustomLocale}
     />
   );
 };
-export default DatePickerMagic;
+export default DatePickerRange;
 

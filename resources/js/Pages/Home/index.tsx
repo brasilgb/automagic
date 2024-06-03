@@ -9,6 +9,7 @@ import { HeaderContent, TitleTop } from "@/Components/PageTop";
 import { IoIosBusiness } from 'react-icons/io';
 import Progress from '@/Components/Charts/Progress';
 import CHFaturamento from "@/Components/Charts/CHFaturamento";
+import DatePickerSingle from "@/Components/DatePicker/DatePickerSingle";
 
 
 const Home = ({ goals, sales, associations, companies, totals, totalsday }: any) => {
@@ -29,6 +30,7 @@ const Home = ({ goals, sales, associations, companies, totals, totalsday }: any)
           {auth?.user?.company_id !== null &&
             <>
               <div>
+                <DatePickerSingle />
               </div>
               <div className="grid gap-6 md:grid-cols-5">
                 <Kpi icon={<AiOutlineLineChart size="50" />} iconcolor="text-blue-700" title="Meta" value={MoneyptBR(goals?.valormeta)} bgcolor="bg-blue-200" textcolor="text-blue-700" />
