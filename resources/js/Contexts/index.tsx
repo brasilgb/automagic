@@ -7,6 +7,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const [dataInicial, setDataInicial] = useState(new Date());
     const [dataFinal, setDataFinal] = useState(new Date());
+    const [dataFiltro, setDataFiltro] = useState<any>(moment().format("YYYYMMDD"));
     const [selectedRange, setSelectedRange] = useState<DayRange>({
         from: null,
         to: null,
@@ -15,12 +16,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return (
         <AuthContext.Provider
             value={{
-                dataInicial, 
+                dataInicial,
                 setDataInicial,
-                dataFinal, 
+                dataFinal,
                 setDataFinal,
-                selectedRange, 
+                selectedRange,
                 setSelectedRange,
+                dataFiltro,
+                setDataFiltro
             }}
         >
             {children}

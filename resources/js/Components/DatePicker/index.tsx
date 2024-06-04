@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from "react";
-import "@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css";
 import DatePicker, {
   DayRange,
 } from "@hassanmojab/react-modern-calendar-datepicker";
+import "@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css";
 import moment from "moment";
 import { CustomLocale } from "./LocaleCalendar";
 import { router } from "@inertiajs/react";
@@ -11,7 +11,6 @@ import { useAuthContext } from "@/Contexts";
 const DatePickerRange = () => {
   const { setDataInicial, setDataFinal, selectedRange, setSelectedRange } = useAuthContext();
 
-console.log();
   const formatInputRange = () => {
     if (!selectedRange?.from || !selectedRange?.to) return '';
     return `${('0' + selectedRange.from?.day).slice(-2) + '/' + ('0' + selectedRange.from?.month).slice(-2) + '/' + selectedRange.from?.year + ' - ' + ('0' + selectedRange.to?.day).slice(-2) + '/' + ('0' + selectedRange.to?.month).slice(-2) + '/' + selectedRange.to?.year}`;

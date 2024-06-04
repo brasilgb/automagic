@@ -10,10 +10,21 @@ import { IoIosBusiness } from 'react-icons/io';
 import Progress from '@/Components/Charts/Progress';
 import CHFaturamento from "@/Components/Charts/CHFaturamento";
 import DatePickerSingle from "@/Components/DatePicker/DatePickerSingle";
+import { useEffect } from 'react';
+import { useAuthContext } from '@/Contexts';
+import moment from 'moment';
 
 
 const Home = ({ goals, sales, associations, companies, totals, totalsday }: any) => {
   const { auth } = usePage().props as any;
+  const { dataFiltro } = useAuthContext();
+  console.log(dataFiltro);
+
+  useEffect(() => {
+    if (dataFiltro) {
+      router.get(route('dashboard', { 'date': moment(dataFiltro).format('YYYYMMDD') }));
+    }
+  }, [dataFiltro])
 
   return (
     <AuthenticatedLayout>
@@ -29,23 +40,18 @@ const Home = ({ goals, sales, associations, companies, totals, totalsday }: any)
         <div className="">
           {auth?.user?.company_id !== null &&
             <>
-              <div>
+              <div className='grid gap-6 md:grid-cols-5'>
                 <DatePickerSingle />
               </div>
-              <div className="grid gap-6 md:grid-cols-5">
+              <div className="grid gap-4 md:grid-cols-5 mt-4">
                 <Kpi icon={<AiOutlineLineChart size="50" />} iconcolor="text-blue-700" title="Meta" value={MoneyptBR(goals?.valormeta)} bgcolor="bg-blue-200" textcolor="text-blue-700" />
                 <Kpi icon={<AiOutlineLineChart size="50" />} iconcolor="text-blue-700" title="Meta Juros" value={MoneyptBR(goals?.metajuros)} bgcolor="bg-blue-200" textcolor="text-blue-700" />
                 <Kpi icon={<GiPayMoney size="50" />} iconcolor="text-green-700" title="Faturamento" value={MoneyptBR(totalsday?.valven)} bgcolor="bg-green-200" textcolor="text-green-700" />
                 <Kpi icon={<FaMoneyBillTrendUp size="50" />} iconcolor="text-yellow-700" title="Val. Juros" value={MoneyptBR(totalsday?.valjur)} bgcolor="bg-green-200" textcolor="text-green-700" />
                 <Kpi icon={<FaMoneyBillTrendUp size="50" />} iconcolor="text-yellow-700" title="Val. Ina." value={MoneyptBR(totalsday?.valina)} bgcolor="bg-green-200" textcolor="text-green-700" />
-
-                {/* <Kpi icon={<FaMoneyBillTrendUp size="50" />} iconcolor="text-yellow-700" title="Representa" value={ValuePercent(totalsday?.permet)} bgcolor="bg-green-200" textcolor="text-green-700" />
-              <Kpi icon={<FaMoneyBillTrendUp size="50" />} iconcolor="text-yellow-700" title="Margem" value={ValuePercent(totalsday?.margem)} bgcolor="bg-green-200" textcolor="text-green-700" />
-              <Kpi icon={<FaMoneyBillTrendUp size="50" />} iconcolor="text-yellow-700" title="Per. Juros" value={ValuePercent(totalsday?.perjur)} bgcolor="bg-green-200" textcolor="text-green-700" />
-              <Kpi icon={<FaMoneyBillTrendUp size="50" />} iconcolor="text-yellow-700" title="Per. Ina." value={ValuePercent(totalsday?.perina)} bgcolor="bg-green-200" textcolor="text-green-700" /> */}
               </div>
-              <div className="grid gap-6 md:grid-cols-4 grid-cols-2 mt-4">
-                <div className='bg-white p-4 shadow-md rounded-md'>
+              <div className="grid gap-4 md:grid-cols-4 grid-cols-2 mt-4">
+                {/* <div className='bg-white p-4 shadow-md rounded-md'>
                   <Progress value={totalsday?.permet} colorBar="#FF5003" colorText="#FF5003" title='Meta' height={100} />
                 </div>
                 <div className='bg-white p-4 shadow-md rounded-md'>
@@ -56,7 +62,7 @@ const Home = ({ goals, sales, associations, companies, totals, totalsday }: any)
                 </div>
                 <div className='bg-white p-4 shadow-md rounded-md'>
                   <Progress value={totalsday?.perina} colorBar="#FFAE08" colorText="#FFAE08" title='Inadimplência' height={100} />
-                </div>
+                </div> */}
               </div>
               <div className="mt-4 p-2 flex flex-col bg-white rounded-md shadow-md my-4">
                 <CHFaturamento data={totals} />
