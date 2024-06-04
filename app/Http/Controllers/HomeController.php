@@ -15,16 +15,27 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        
+
         $user = Auth::user();
         $cnpj = Company::where('id', $user->company_id)->first()->cnpj;
+        $companies = Company::get();
 
-        $companies = Company::where('cnpj', $cnpj)->get();
-        $sales = Sale::where('dtvenda', $request->date)->where('cnpj', $cnpj)->get();
-        $associations = Association::where('dtvenda', $request->date)->where('cnpj', $cnpj)->get();
-        $totalsday = Total::where('datatu', $request->date)->where('cnpj', $cnpj)->get();
+        // $sales = Sale::where('cnpj', $cnpj)->first();
+        $sales = Sale::when($request->has('dt'), function ($wquery) use ($request) {
+            $wquery->where('dtvenda', $request->dt);
+        })->first();
+        //$associations = Association::where('cnpj', $cnpj)->first();
+        $associations = Association::when($request->has('dt'), function ($wquery) use ($request) {
+            $wquery->where('dtvenda', $request->dt);
+        })->first();
+        //$totalsday = Total::where('cnpj', $cnpj)->first();
+        $totalsday = Total::when($request->has('dt'), function ($wquery) use ($request) {
+            $wquery->where('datatu', $request->dt);
+        })->first();
+
+
         $goals = Goal::where('cnpj', $cnpj)->first();
-        $totals = Total::where('datatu', $request->date)->where('cnpj', $cnpj)->get();
+        $totals = Total::where('cnpj', $cnpj)->get();
         return Inertia::render('Home/index', [
             "sales" => $sales,
             "goals" => $goals,
@@ -34,7 +45,6 @@ class HomeController extends Controller
             "companies" => count($companies)
         ]);
     }
-
     public function unauthorized()
     {
         return Inertia::render('Unauthorized/index');

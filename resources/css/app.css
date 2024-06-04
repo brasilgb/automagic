@@ -20,10 +20,3 @@
         @apply rounded-md p-2 bg-transparent text-base text-gray-600 border border-gray-300;
     }
 }
-.highcharts-container {
-    width: 100%;
-}
-.highcharts-container svg {
-    width: 100%;
-    display: flex;
-}

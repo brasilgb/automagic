@@ -47,7 +47,7 @@ const DatePickerRange = () => {
       onChange={setSelectedRange}
       inputPlaceholder={`${moment().format("DD/MM/YYYY")} - ${moment().format("DD/MM/YYYY")}`}
       formatInputText={formatInputRange}
-      inputClassName="px-3 py-1.5 w-48 text-xs font-bold shadow-md !border-2 !border-white !placeholder:text-white !text-white !bg-megb-blue-secundary rounded-md transition-colors duration-300" // custom class
+      inputClassName="px-3 !py-1 !text-sm !font-bold !bg-gray-50 !rounded-md !shadow-md !border !border-white !text-gray-500" // custom class
       calendarClassName="responsive-calendar"
       shouldHighlightWeekends
       locale={CustomLocale}

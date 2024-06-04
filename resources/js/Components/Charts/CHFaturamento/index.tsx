@@ -171,9 +171,9 @@ const CHFaturamento = ({ data }: Props) => {
   };
   
   return (
-    <Fragment>
-      <HighchartsReact highcharts={Highcharts} options={options} />
-    </Fragment>
+      <div className="w-[99%]">
+        <HighchartsReact highcharts={Highcharts} options={options} />
+      </div>
   );
 };
 

@@ -9,7 +9,9 @@ type Props = {}
 
 const DatePickerSingle = (props: Props) => {
     const {
-        setDataFiltro
+        setDataFiltro,
+        setExecuteFilter,
+        dataFiltro
     } = useAuthContext();
     const [selectedDay, setSelectedDay] = useState<DayValue>(null);
 
@@ -26,6 +28,7 @@ const DatePickerSingle = (props: Props) => {
                     'YYYY-MM-DD'
                 ).toDate()
             );
+            setExecuteFilter(true);
         }
     }, [selectedDay, setDataFiltro]);
 
@@ -33,7 +36,7 @@ const DatePickerSingle = (props: Props) => {
         <DatePicker
             value={selectedDay}
             onChange={setSelectedDay}
-            inputPlaceholder={`${moment().format("DD/MM/YYYY")}`} // placeholder
+            inputPlaceholder={`${moment(dataFiltro).format("DD/MM/YYYY")}`} // placeholder
             formatInputText={formatInputValue} // format value
             inputClassName="!text-sm !font-bold !bg-gray-50 !rounded-md !shadow-md !border !border-white !text-gray-500" // custom class
             calendarClassName="responsive-calendar"

@@ -28,10 +28,12 @@ const dateSales = sales?.data;
           <TitleTop />
         </HeaderContent>
         <HeaderContent>
-          <div className="flex items-center justify-center gap-6 w-full">
+          <div className="flex items-center justify-between gap-6 w-full">
             <DatePickerMagic />
+            <div className="flex items-center justify-center gap-6 flex-1">
             <AnaliseButton label="Faturamento" onclick={() => setAlteredSales('faturamento')} active={alteredSales === 'faturamento' ? true : false} />
             <AnaliseButton label="Associação" onclick={() => setAlteredSales('associacao')} active={alteredSales === 'associacao' ? true : false} />
+            </div>
           </div>
         </HeaderContent>
         <CardBody className="rounded-md p-1">
