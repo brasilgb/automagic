@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('filial');
             $table->string('descfilial');
             $table->string('dtvenda');
+            $table->string('anomes');
             $table->decimal('valdevolucao', 15,2);
             $table->decimal('valvenda', 15,2);
             $table->decimal('margem', 15,2);

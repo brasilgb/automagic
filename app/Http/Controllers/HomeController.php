@@ -32,10 +32,13 @@ class HomeController extends Controller
         $totalsday = Total::when($request->has('dt'), function ($wquery) use ($request) {
             $wquery->where('datatu', $request->dt);
         })->first();
-
+        
+        // $totals = Total::where('cnpj', $cnpj)->get();
+        $totals = Total::when($request->has('dt'), function ($wquery) use ($request) {
+            $wquery->where('datatu', $request->dt);
+        })->get();
 
         $goals = Goal::where('cnpj', $cnpj)->first();
-        $totals = Total::where('cnpj', $cnpj)->get();
         return Inertia::render('Home/index', [
             "sales" => $sales,
             "goals" => $goals,

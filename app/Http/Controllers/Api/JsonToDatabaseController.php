@@ -57,26 +57,20 @@ class JsonToDatabaseController extends Controller
                         "filial" => $dbdata['resumo_codfil'],
                         "descfilial" => $dbdata['resumo_desfil'],
                         "dtvenda" => $dbdata['resumo_datmvt'],
+                        "anomes" => substr($dbdata['resumo_datmvt'], 0, 6),
                         "valdevolucao" => $dbdata['resumo_valdev'],
                         "valvenda" => $dbdata['resumo_valven'],
                         "margem" => $dbdata['resumo_margem'],
                         "representa" => $dbdata['resumo_presen'],
                     ];
                 }
-            }
-            if (!$existsale) {
-                Sale::insert($dataven);
-                return $this->responseInsert('venda');
-            } else {
-                Sale::where('dtvenda', $dbdata['resumo_datmvt'])->where('cnpj', $dbdata['resumo_cnpj'])->update(
-                    [
-                        "dtvenda" => $dbdata['resumo_datmvt'],
-                        "valdevolucao" => $dbdata['resumo_valdev'],
-                        "valvenda" => $dbdata['resumo_valven'],
-                        "margem" => $dbdata['resumo_margem'],
-                        "representa" => $dbdata['resumo_presen'],
-                    ]
-                );
+                if (!$existsale) {
+                    Sale::insert($dataven);
+                    return $this->responseInsert('venda');
+                } else {
+                    Sale::where('cnpj', $dbdata['resumo_cnpj'])->update($dataven);
+                    
+                }
                 return $this->responseUpdate('venda');
             }
         }

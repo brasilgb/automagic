@@ -17,6 +17,7 @@ class Sale extends Model
         'filial',
         'descfilial',
         'dtvenda',
+        "anomes",
         'valdevolucao',
         'valvenda',
         'margem',
