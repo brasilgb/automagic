@@ -16,7 +16,7 @@ import moment from 'moment';
 import { IoSearch } from "react-icons/io5";
 
 
-const Home = ({ goals, companies, totals, totalsday }: any) => {
+const Home = ({ goals, companies, sales, totalsday }: any) => {
   const { auth } = usePage().props as any;
   const { dataFiltro, executeFilter, setExecuteFilter } = useAuthContext();
 
@@ -72,7 +72,7 @@ const Home = ({ goals, companies, totals, totalsday }: any) => {
                 </div>
               </div>
               <div className="mt-4 p-2 flex flex-col bg-white rounded-md shadow-md my-4">
-                <CHFaturamento data={totals} />
+                <CHFaturamento data={sales} />
               </div>
             </>
           }

@@ -19,23 +19,23 @@ class HomeController extends Controller
         $user = Auth::user();
         $cnpj = Company::where('id', $user->company_id)->first()->cnpj;
         $companies = Company::get();
-
+        // dd(substr($request->dt, 0, 6));
         // $sales = Sale::where('cnpj', $cnpj)->first();
-        $sales = Sale::when($request->has('dt'), function ($wquery) use ($request) {
-            $wquery->where('dtvenda', $request->dt);
+        $sales = Sale::when($request->has('dt'), function ($wquery, $cnpj) use ($request) {
+            $wquery->where('cnpj', $cnpj)->where('dtvenda', $request->dt);
         })->first();
         //$associations = Association::where('cnpj', $cnpj)->first();
-        $associations = Association::when($request->has('dt'), function ($wquery) use ($request) {
-            $wquery->where('dtvenda', $request->dt);
+        $associations = Association::when($request->has('dt'), function ($wquery, $cnpj) use ($request) {
+            $wquery->where('cnpj', $cnpj)->where('dtvenda', $request->dt);
         })->first();
         //$totalsday = Total::where('cnpj', $cnpj)->first();
-        $totalsday = Total::when($request->has('dt'), function ($wquery) use ($request) {
-            $wquery->where('datatu', $request->dt);
+        $totalsday = Total::when($request->has('dt'), function ($wquery, $cnpj) use ($request) {
+            $wquery->where('cnpj', $cnpj)->where('datatu', $request->dt);
         })->first();
         
-        // $totals = Total::where('cnpj', $cnpj)->get();
-        $totals = Total::when($request->has('dt'), function ($wquery) use ($request) {
-            $wquery->where('datatu', $request->dt);
+        // $saleschart = Sale::where('cnpj', $cnpj)->where('anomes', substr($request->dt, 0, 6))->get();
+        $saleschart = Sale::when($request->has('dt'), function ($wquery) use ($request, $cnpj) {
+            $wquery->where('cnpj', $cnpj)->where('anomes', substr($request->dt, 0, 6));
         })->get();
 
         $goals = Goal::where('cnpj', $cnpj)->first();
@@ -44,7 +44,7 @@ class HomeController extends Controller
             "goals" => $goals,
             "associations" => $associations,
             "totalsday" => $totalsday,
-            "totals" => $totals,
+            "sales" => $saleschart,
             "companies" => count($companies)
         ]);
     }

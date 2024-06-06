@@ -22,10 +22,10 @@ const CHFaturamento = ({ data }: Props) => {
 
   const colors = Highcharts.getOptions().colors;
 
-  const diasemana = data.map((value: any) => moment(value?.datatu).format("DD"));
+  const diasemana = data.map((value: any) => moment(value?.dtvenda).format("DD"));
   const margem = data.map((value: any) => parseFloat(value?.margem));
   const meta = data.map((value: any) => parseFloat(value?.meta));
-  const vendas = data.map((value: any) => parseFloat(value?.valven));
+  const vendas = data.map((value: any) => parseFloat(value?.valvenda));
 
   Highcharts.setOptions({
     lang: {
@@ -169,11 +169,11 @@ const CHFaturamento = ({ data }: Props) => {
       },
     ],
   };
-  
+
   return (
-      <div className="w-[99%]">
-        <HighchartsReact highcharts={Highcharts} options={options} />
-      </div>
+    <div className="w-[99%]">
+      <HighchartsReact highcharts={Highcharts} options={options} />
+    </div>
   );
 };
 

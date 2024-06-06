@@ -3,5 +3,5 @@ export const MoneyptBR = (value: number) => {
 }
 
 export const ValuePercent = (value:number) => {
-    return `${(value * 100).toFixed(2)}%`;
+    return `${(value)}%`;
 }

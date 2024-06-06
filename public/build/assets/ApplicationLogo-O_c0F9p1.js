@@ -1,0 +1,1 @@
+import{q as p,j as i}from"./app-Ci5HigT4.js";const r=({className:n})=>{var s,t;const{conf:o=[]}=p().props;return i.jsx("div",{className:n,children:i.jsx("img",{src:`/storage/images/${(s=o[0])!=null&&s.logo?(t=o[0])==null?void 0:t.logo:"default.png"}`,alt:"Logo"})})},a=r;export{a as A};
