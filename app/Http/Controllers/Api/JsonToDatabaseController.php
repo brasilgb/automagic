@@ -40,19 +40,20 @@ class JsonToDatabaseController extends Controller
             ],
         ], 201);
     }
+
     public function index(Request $request)
     {
         if ($request->type === "venda") {
             foreach (array_slice($request->dbdata, 0, 1) as $fdt) {
-                $dataComp = $fdt["resumo_datmvt"];
-                $cnpjComp = $fdt["resumo_cnpj"];
+                $dataKey = $fdt["resumo_cnpj"] . $fdt["resumo_datmvt"];
             }
-            $salesdesc = Sale::orderByDesc('id');
+            $salesdesc = Sale::where('cnpj', $request->dbdata[0]["resumo_cnpj"])->orderByDesc('id');
             $compop = Company::where('cnpj', $request->dbdata[0]["resumo_cnpj"]);
             $compid = $compop->first()->id;
             foreach ($request->dbdata as $dbdata) {
                 $dataven[] = [
                     "company_id" => $compid,
+                    "key" => $dbdata['resumo_cnpj'] . $dbdata['resumo_datmvt'],
                     "cnpj" => $dbdata['resumo_cnpj'],
                     "filial" => $dbdata['resumo_codfil'],
                     "descfilial" => $dbdata['resumo_desfil'],
@@ -64,33 +65,34 @@ class JsonToDatabaseController extends Controller
                     "representa" => $dbdata['resumo_presen'],
                 ];
             }
-                $existcnpj = $compop->exists();
-                if (!$existcnpj) {
-                    return $this->responseError('venda');
+            $existcnpj = $compop->exists();
+            if (!$existcnpj) {
+                return $this->responseError('venda');
+            } else {
+                if ($salesdesc->count() == 0) {
+                    Sale::insert($dataven);
+                    return $this->responseInsert('venda');
                 } else {
-                    if ($salesdesc->count() == 0 || $salesdesc->first()->dtvenda !== $dataComp  ) {
-                        Sale::insert($dataven);
-                        return $this->responseInsert('venda');
-                    } else {
-                        Sale::where('dtvenda', $dataComp)->where('cnpj', $cnpjComp)->delete();
-                        Sale::insert($dataven);
-                        return $this->responseUpdate('venda');
+                    foreach ($request->dbdata as $dbdata) {
+                        Sale::where('key', $dbdata['resumo_cnpj'] . $dbdata['resumo_datmvt'])->delete();
                     }
+                    Sale::insert($dataven);
+                    return $this->responseUpdate('venda');
                 }
+            }
         }
 
         if ($request->type === "assoc") {
             foreach (array_slice($request->dbdata, 0, 1) as $fdt) {
-                $dataComp = $fdt["assoc_datmvt"];
-                $cnpjComp = $fdt["assoc_cnpj"];
+                $dataKey = $fdt["assoc_cnpj"] . $fdt["assoc_datmvt"] . $fdt['assoc_ass'];
             }
-
-            $salesdesc = Association::orderByDesc('id');
+            $salesdesc = Association::where('cnpj', $request->dbdata[0]["assoc_cnpj"])->orderByDesc('id');
             $compop = Company::where('cnpj', $request->dbdata[0]["assoc_cnpj"]);
             $compid = $compop->first()->id;
             foreach ($request->dbdata as $dbdata) {
                 $datass[] = [
                     "company_id" => $compid,
+                    "key" => $dbdata['assoc_cnpj'] . $dbdata['assoc_datmvt'] . $dbdata['assoc_ass'],
                     "cnpj" => $dbdata['assoc_cnpj'],
                     "filial" => $dbdata['assoc_filial'],
                     "dtvenda" => $dbdata['assoc_datmvt'],
@@ -104,102 +106,96 @@ class JsonToDatabaseController extends Controller
             }
             $existcnpj = $compop->exists();
             if (!$existcnpj) {
-                return $this->responseError('assoc');
+                return $this->responseError('associação');
             } else {
-                if ($salesdesc->count() == 0 || $salesdesc->first()->dtvenda !== $dataComp  ) {
+                if ($salesdesc->count() == 0) {
                     Association::insert($datass);
-                    return $this->responseInsert('assoc');
+                    return $this->responseInsert('associação');
                 } else {
-                    Association::where('dtvenda', $dataComp)->where('cnpj', $cnpjComp)->delete();
+                    foreach ($request->dbdata as $dbdata) {
+                        Association::where('key', $dbdata['assoc_cnpj'] . $dbdata['assoc_datmvt'] . $dbdata['assoc_ass'])->delete();
+                    }
                     Association::insert($datass);
-                    return $this->responseUpdate('assoc');
+                    return $this->responseUpdate('associação');
                 }
             }
         }
 
-        // if ($req["type"] === "meta") {
-        //     foreach ($req["dbdata"] as $dbdata) {
-        //         $existcnpj = Company::where('cnpj', $dbdata["meta_cnpj"])->exists();
-        //         if (!$existcnpj) {
-        //             return $this->responseError('meta');
-        //         } else {
-        //             $compid = Company::where('cnpj', $dbdata["meta_cnpj"])->first()->id;
-        //             $sales = Sale::where('cnpj', $dbdata["meta_cnpj"])->get();
-        //             $sumsales = $sales->sum('valvenda');
-        //             $existmeta = Goal::where('anomes', $dbdata['meta_anomes'])->where('cnpj', $dbdata["meta_cnpj"])->exists();
-        //             $data[] = [
-        //                 "company_id" => $compid,
-        //                 "cnpj" => $dbdata['meta_cnpj'],
-        //                 "filial" => $dbdata['meta_codfil'],
-        //                 "anomes" => $dbdata['meta_anomes'],
-        //                 "faturamento" => $sumsales,
-        //                 "valormeta" => $dbdata['meta_valmeta'],
-        //                 "metajuros" => $dbdata['meta_valjuros'],
-        //             ];
-        //         }
-        //     }
-        //     if (!$existmeta) {
-        //         Goal::insert($data);
-        //         return $this->responseInsert('meta');
-        //     } else {
-        //         Goal::where('anomes', $dbdata['meta_anomes'])->where('cnpj', $dbdata['meta_cnpj'])->update(
-        //             [
-        //                 "anomes" => $dbdata['meta_anomes'],
-        //                 "faturamento" => $sumsales,
-        //                 "valormeta" => $dbdata['meta_valmeta'],
-        //                 "metajuros" => $dbdata['meta_valjuros'],
-        //             ]
-        //         );
-        //         return $this->responseUpdate('meta');
-        //     }
-        // }
+        if ($request->type === "meta") {
+            foreach (array_slice($request->dbdata, 0, 1) as $fdt) {
+                $dataKey = $fdt["meta_cnpj"] . $fdt["meta_anomes"];
+            }
+            $salesdesc = Goal::where('cnpj', $request->dbdata[0]["meta_cnpj"])->orderByDesc('id');
+            $compop = Company::where('cnpj', $request->dbdata[0]["meta_cnpj"]);
+            $compid = $compop->first()->id;
+            foreach ($request->dbdata as $dbdata) {
+                $datame[] = [
+                    "company_id" => $compid,
+                    "key" => $dbdata['meta_cnpj'] . $dbdata['meta_anomes'],
+                    "cnpj" => $dbdata['meta_cnpj'],
+                    "filial" => $dbdata['meta_codfil'],
+                    "anomes" => $dbdata['meta_anomes'],
+                    "valormeta" => $dbdata['meta_valmeta'],
+                    "metajuros" => $dbdata['meta_valjuros'],
+                ];
+            }
+            $existcnpj = $compop->exists();
+            if (!$existcnpj) {
+                return $this->responseError('meta');
+            } else {
+                if ($salesdesc->count() == 0) {
+                    Goal::insert($datame);
+                    return $this->responseInsert('meta');
+                } else {
+                    foreach ($request->dbdata as $dbdata) {
+                        Goal::where('key', $dbdata['meta_cnpj'] . $dbdata['meta_anomes'])->delete();
+                    }
+                    Goal::insert($datame);
+                    return $this->responseUpdate('meta');
+                }
+            }
+        }
 
-        // if ($req["type"] === "total") {
-        //     foreach ($req["dbdata"] as $dbdata) {
-        //         $existcnpj = Company::where('cnpj', $dbdata["total_cnpj"])->exists();
-        //         if (!$existcnpj) {
-        //             return $this->responseError('total');
-        //         } else {
-        //             $compid = Company::where('cnpj', $dbdata["total_cnpj"])->first()->id;
-        //             $existsale = Total::where('datatu', $dbdata['total_datatu'])->where('cnpj', $dbdata["total_cnpj"])->exists();
-        //             $datatot[] = [
-        //                 "company_id" => $compid,
-        //                 "cnpj" => $dbdata['total_cnpj'],
-        //                 "datatu" => $dbdata['total_datatu'],
-        //                 "valdev" => $dbdata['total_valdev'],
-        //                 "valven" => $dbdata['total_valven'],
-        //                 "margem" => $dbdata['total_margem'],
-        //                 "permet" => $dbdata['total_permet'],
-        //                 "projec" => $dbdata['total_projec'],
-        //                 "valjur" => $dbdata['total_valjur'],
-        //                 "perjur" => $dbdata['total_perjur'],
-        //                 "valina" => $dbdata['total_valina'],
-        //                 "perina" => $dbdata['total_perina'],
-        //                 "valest" => $dbdata['total_valest']
-        //             ];
-        //         }
-        //     }
-        //     if (!$existsale) {
-        //         Total::insert($datatot);
-        //         return $this->responseInsert('total');
-        //     } else {
-        //         Total::where('datatu', $dbdata['total_datatu'])->where('cnpj', $dbdata['total_cnpj'])->update(
-        //             [
-        //                 "datatu" => $dbdata['total_datatu'],
-        //                 "valdev" => $dbdata['total_valdev'],
-        //                 "valven" => $dbdata['total_valven'],
-        //                 "margem" => $dbdata['total_margem'],
-        //                 "permet" => $dbdata['total_permet'],
-        //                 "projec" => $dbdata['total_projec'],
-        //                 "valjur" => $dbdata['total_valjur'],
-        //                 "perjur" => $dbdata['total_perjur'],
-        //                 "valina" => $dbdata['total_valina'],
-        //                 "perina" => $dbdata['total_perina'],
-        //                 "valest" => $dbdata['total_valest']
-        //             ]
-        //         );
-        //         return $this->responseUpdate('total');
-        //     }
-        // }
+        if ($request->type ===  "total") {
+            foreach (array_slice($request->dbdata, 0, 1) as $fdt) {
+                $dataKey = $fdt["total_cnpj"] . $fdt["total_datatu"];
+            }
+            $salesdesc = Total::where('cnpj', $request->dbdata[0]["total_cnpj"])->orderByDesc('id');
+            $compop = Company::where('cnpj', $request->dbdata[0]["total_cnpj"]);
+            $compid = $compop->first()->id;
+            foreach ($request->dbdata as $dbdata) {
+                $datatot[] = [
+                    "company_id" => $compid,
+                    "key" => $dbdata['total_cnpj'] . $dbdata['total_datatu'],
+                    "cnpj" => $dbdata['total_cnpj'],
+                    "datatu" => $dbdata['total_datatu'],
+                    "valdev" => $dbdata['total_valdev'],
+                    "valven" => $dbdata['total_valven'],
+                    "margem" => $dbdata['total_margem'],
+                    "permet" => $dbdata['total_permet'],
+                    "projec" => $dbdata['total_projec'],
+                    "valjur" => $dbdata['total_valjur'],
+                    "perjur" => $dbdata['total_perjur'],
+                    "valina" => $dbdata['total_valina'],
+                    "perina" => $dbdata['total_perina'],
+                    "valest" => $dbdata['total_valest']
+                ];
+            }
+        }
+        $existcnpj = $compop->exists();
+        if (!$existcnpj) {
+            return $this->responseError('total');
+        } else {
+            if ($salesdesc->count() == 0) {
+                Total::insert($datatot);
+                return $this->responseInsert('total');
+            } else {
+                foreach ($request->dbdata as $dbdata) {
+                    Total::where('key', $dbdata["total_cnpj"] . $dbdata["total_datatu"])->delete();
+                }
+                Total::insert($datatot);
+                return $this->responseUpdate('total');
+            }
+        }
     }
 }

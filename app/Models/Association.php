@@ -11,6 +11,7 @@ class Association extends Model
 
     protected $fillable = [
         'company_id',
+        'key',
         'cnpj',
         'filial',
         'dtvenda',

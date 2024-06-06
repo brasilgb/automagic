@@ -10,6 +10,8 @@ class Total extends Model
     use HasFactory;
 
     protected $fillable = [
+        "company_id",
+        "key",
         "cnpj",
         "datatu",
         "valdev",

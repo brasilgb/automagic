@@ -11,10 +11,10 @@ class Goal extends Model
 
     protected $fillable = [
         'company_id',
+        'key',
         'cnpj',
         'filial',
         'anomes',
-        'faturamento',
         'valormeta',
         'metajuros',
     ];

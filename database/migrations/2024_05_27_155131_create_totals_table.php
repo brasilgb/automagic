@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('totals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->nullable()->constrained();
+            $table->string('key')->index();
             $table->string('cnpj');
             $table->string('datatu');
             $table->decimal('valdev', 15, 2);

@@ -13,6 +13,7 @@ class Sale extends Model
 
     protected $fillable = [
         'company_id',
+        'key',
         'cnpj',
         'filial',
         'descfilial',

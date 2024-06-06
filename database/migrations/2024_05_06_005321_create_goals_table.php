@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('goals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->nullable()->constrained();
+            $table->string("key")->index();
             $table->string("cnpj");
             $table->string("filial");
             $table->string("anomes");
-            $table->decimal("faturamento", 15,2);
             $table->decimal("valormeta", 15,2);
             $table->decimal("metajuros", 15,4);
             $table->timestamp('created_at')->useCurrent();
