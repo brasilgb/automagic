@@ -10,9 +10,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [dataFiltro, setDataFiltro] = useState<any>(moment().format("YYYYMMDD"));
     const [executeFilter, setExecuteFilter] = useState<boolean>(false);
     const [selectedRange, setSelectedRange] = useState<DayRange>({
-        from: null,
-        to: null,
-    });
+        from: {
+          year: parseInt(moment(dataInicial).format('YYYY')),
+          month: parseInt(moment(dataInicial).format('MM')),
+          day: parseInt(moment(dataInicial).format('DD')),
+        },
+        to: {
+          year: parseInt(moment(dataFinal).format('YYYY')),
+          month: parseInt(moment(dataFinal).format('MM')),
+          day: parseInt(moment(dataFinal).format('DD')),
+        },
+      });
 
     return (
         <AuthContext.Provider
