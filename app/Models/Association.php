@@ -20,7 +20,8 @@ class Association extends Model
         'valdevolucao',
         'valvenda',
         'margem',
-        'representa'
+        'representa',
+        'valmeta'
     ];
     
     public function company()

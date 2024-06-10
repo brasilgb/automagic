@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('descassoc');
             $table->decimal('valdevolucao', 15,2);
             $table->decimal('valvenda', 15,2);
+            $table->decimal('valmeta', 15,2);
             $table->decimal('margem', 15,2);
             $table->decimal('representa', 15,2);
             $table->timestamp('created_at')->useCurrent();

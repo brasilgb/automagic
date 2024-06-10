@@ -15,7 +15,7 @@ import { useAuthContext } from '@/Contexts';
 import moment from 'moment';
 
 
-const Home = ({ goals, companies, sales, totalsday, saleschart }: any) => {
+const Home = ({ companies, sales, totalsday, saleschart }: any) => {
   const { auth } = usePage().props as any;
   const { dataFiltro, executeFilter, setExecuteFilter } = useAuthContext();
 
@@ -48,10 +48,10 @@ const Home = ({ goals, companies, sales, totalsday, saleschart }: any) => {
               <div className="flex items-center justify-start">
                 <DatePickerSingle />
               </div>
-              {totalsday && goals &&
+              {totalsday &&
                 <div className="grid gap-4 md:grid-cols-5 mt-4">
-                  <Kpi icon={<AiOutlineLineChart size="50" />} iconcolor="text-blue-700" title="Meta" value={MoneyptBR(goals?.valormeta)} bgcolor="bg-blue-200" textcolor="text-blue-700" />
-                  <Kpi icon={<AiOutlineLineChart size="50" />} iconcolor="text-blue-700" title="Meta Juros" value={MoneyptBR(goals?.metajuros)} bgcolor="bg-blue-200" textcolor="text-blue-700" />
+                  <Kpi icon={<AiOutlineLineChart size="50" />} iconcolor="text-blue-700" title="Meta" value={MoneyptBR(totalsday?.valmeta)} bgcolor="bg-blue-200" textcolor="text-blue-700" />
+                  <Kpi icon={<AiOutlineLineChart size="50" />} iconcolor="text-blue-700" title="Val. Dev" value={MoneyptBR(totalsday?.valdev)} bgcolor="bg-blue-200" textcolor="text-blue-700" />
                   <Kpi icon={<GiPayMoney size="50" />} iconcolor="text-green-700" title="Faturamento" value={MoneyptBR(totalsday?.valven)} bgcolor="bg-green-200" textcolor="text-green-700" />
                   <Kpi icon={<FaMoneyBillTrendUp size="50" />} iconcolor="text-yellow-700" title="Val. Juros" value={MoneyptBR(totalsday?.valjur)} bgcolor="bg-green-200" textcolor="text-green-700" />
                   <Kpi icon={<FaMoneyBillTrendUp size="50" />} iconcolor="text-yellow-700" title="Val. Ina." value={MoneyptBR(totalsday?.valina)} bgcolor="bg-green-200" textcolor="text-green-700" />

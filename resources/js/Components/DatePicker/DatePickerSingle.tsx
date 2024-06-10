@@ -4,6 +4,7 @@ import "@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css";
 import moment from "moment";
 import React, { useEffect, useState } from 'react'
 import { CustomLocale } from "./LocaleCalendar";
+import { IoReload } from "react-icons/io5";
 
 type Props = {}
 
@@ -32,17 +33,26 @@ const DatePickerSingle = (props: Props) => {
         }
     }, [selectedDay, setDataFiltro]);
 
+    const handleSelectedDay = () => {
+        setDataFiltro(moment().format("YYYYMMDD"));
+    }
+
     return (
-        <DatePicker
-            value={selectedDay}
-            onChange={setSelectedDay}
-            inputPlaceholder={`${moment(dataFiltro).format("DD/MM/YYYY")}`} // placeholder
-            formatInputText={formatInputValue} // format value
-            inputClassName="!text-sm !font-bold !bg-gray-50 !rounded-md !shadow-md !border !border-white !text-gray-500" // custom class
-            calendarClassName="responsive-calendar"
-            shouldHighlightWeekends
-            locale={CustomLocale}
-        />
+        <div className="flex">
+            <div className="text-sm p-1 font-bold bg-gray-50 rounded-md shadow-md border border-white text-gray-500 mr-1 cursor-pointer">
+                <IoReload size={22} onClick={() => handleSelectedDay()} />
+            </div>
+            <DatePicker
+                value={selectedDay}
+                onChange={setSelectedDay}
+                inputPlaceholder={`${moment(dataFiltro).format("DD/MM/YYYY")}`} // placeholder
+                formatInputText={formatInputValue} // format value
+                inputClassName="!text-sm !font-bold !bg-gray-50 !rounded-md !shadow-md !border !border-white !text-gray-500" // custom class
+                calendarClassName="responsive-calendar"
+                shouldHighlightWeekends
+                locale={CustomLocale}
+            />
+        </div>
     )
 }
 

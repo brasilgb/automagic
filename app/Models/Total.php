@@ -23,6 +23,7 @@ class Total extends Model
         "perjur",
         "valina",
         "perina",
-        "valest"
+        "valest",
+        "valmeta"
     ];
 }

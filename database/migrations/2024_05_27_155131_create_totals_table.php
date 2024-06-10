@@ -27,6 +27,7 @@ return new class extends Migration
             $table->decimal('valina', 15, 2);
             $table->decimal('perina', 15, 2);
             $table->decimal('valest', 15, 2);
+            $table->decimal('valmeta', 15, 2);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });

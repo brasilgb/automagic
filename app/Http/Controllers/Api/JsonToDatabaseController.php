@@ -63,6 +63,7 @@ class JsonToDatabaseController extends Controller
                     "valvenda" => $dbdata['resumo_valven'],
                     "margem" => $dbdata['resumo_margem'],
                     "representa" => $dbdata['resumo_presen'],
+                    "valmeta" => $dbdata['resumo_metdia']
                 ];
             }
             $existcnpj = $compop->exists();
@@ -102,6 +103,7 @@ class JsonToDatabaseController extends Controller
                     "valvenda" => $dbdata['assoc_valven'],
                     "margem" => $dbdata['assoc_margem'],
                     "representa" => $dbdata['assoc_repres'],
+                    "valmeta" => $dbdata['assoc_metdia']
                 ];
             }
             $existcnpj = $compop->exists();
@@ -117,41 +119,6 @@ class JsonToDatabaseController extends Controller
                     }
                     Association::insert($datass);
                     return $this->responseUpdate('associação');
-                }
-            }
-        }
-
-        if ($request->type === "meta") {
-            foreach (array_slice($request->dbdata, 0, 1) as $fdt) {
-                $dataKey = $fdt["meta_cnpj"] . $fdt["meta_anomes"];
-            }
-            $salesdesc = Goal::where('cnpj', $request->dbdata[0]["meta_cnpj"])->orderByDesc('id');
-            $compop = Company::where('cnpj', $request->dbdata[0]["meta_cnpj"]);
-            $compid = $compop->first()->id;
-            foreach ($request->dbdata as $dbdata) {
-                $datame[] = [
-                    "company_id" => $compid,
-                    "key" => $dbdata['meta_cnpj'] . $dbdata['meta_anomes'],
-                    "cnpj" => $dbdata['meta_cnpj'],
-                    "filial" => $dbdata['meta_codfil'],
-                    "anomes" => $dbdata['meta_anomes'],
-                    "valormeta" => $dbdata['meta_valmeta'],
-                    "metajuros" => $dbdata['meta_valjuros'],
-                ];
-            }
-            $existcnpj = $compop->exists();
-            if (!$existcnpj) {
-                return $this->responseError('meta');
-            } else {
-                if ($salesdesc->count() == 0) {
-                    Goal::insert($datame);
-                    return $this->responseInsert('meta');
-                } else {
-                    foreach ($request->dbdata as $dbdata) {
-                        Goal::where('key', $dbdata['meta_cnpj'] . $dbdata['meta_anomes'])->delete();
-                    }
-                    Goal::insert($datame);
-                    return $this->responseUpdate('meta');
                 }
             }
         }
@@ -178,23 +145,24 @@ class JsonToDatabaseController extends Controller
                     "perjur" => $dbdata['total_perjur'],
                     "valina" => $dbdata['total_valina'],
                     "perina" => $dbdata['total_perina'],
-                    "valest" => $dbdata['total_valest']
+                    "valest" => $dbdata['total_valest'],
+                    "valmeta" => $dbdata['total_meta'],
                 ];
             }
-        }
-        $existcnpj = $compop->exists();
-        if (!$existcnpj) {
-            return $this->responseError('total');
-        } else {
-            if ($salesdesc->count() == 0) {
-                Total::insert($datatot);
-                return $this->responseInsert('total');
+            $existcnpj = $compop->exists();
+            if (!$existcnpj) {
+                return $this->responseError('total');
             } else {
-                foreach ($request->dbdata as $dbdata) {
-                    Total::where('key', $dbdata["total_cnpj"] . $dbdata["total_datatu"])->delete();
+                if ($salesdesc->count() == 0) {
+                    Total::insert($datatot);
+                    return $this->responseInsert('total');
+                } else {
+                    foreach ($request->dbdata as $dbdata) {
+                        Total::where('key', $dbdata["total_cnpj"] . $dbdata["total_datatu"])->delete();
+                    }
+                    Total::insert($datatot);
+                    return $this->responseUpdate('total');
                 }
-                Total::insert($datatot);
-                return $this->responseUpdate('total');
             }
         }
     }

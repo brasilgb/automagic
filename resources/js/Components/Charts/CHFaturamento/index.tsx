@@ -24,7 +24,7 @@ const CHFaturamento = ({ data }: Props) => {
 
   const diasemana = data.map((value: any) => moment(value?.dtvenda).format("DD"));
   const margem = data.map((value: any) => parseFloat(value?.margem));
-  const meta = data.map((value: any) => parseFloat(value?.meta));
+  const meta = data.map((value: any) => parseFloat(value?.valmeta));
   const vendas = data.map((value: any) => parseFloat(value?.valvenda));
 
   Highcharts.setOptions({

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Association;
 use App\Models\Company;
-use App\Models\Goal;
 use App\Models\Sale;
 use App\Models\Total;
 use Illuminate\Http\Request;
@@ -18,8 +17,8 @@ class HomeController extends Controller
 
         $user = Auth::user();
         $compexists = Company::where('id', $user->company_id)->exists();
-
-        $cnpj = Company::where('id', $user->company_id)->first()->cnpj;
+        // dd($compexists);
+        $cnpj = $compexists ? Company::where('id', $user->company_id)->first()->cnpj : [];
         $companies = Company::get();
 
         $sales = Sale::when($request->has('dt'), function ($wquery, $cnpj) use ($request) {
@@ -39,11 +38,9 @@ class HomeController extends Controller
         $saleschart = Sale::when($request->has('dt'), function ($wquery) use ($request, $cnpj) {
             $wquery->where('cnpj', $cnpj)->where('anomes', substr($request->dt, 0, 6));
         })->get();
-// dd($request->dt);
-        $goals = Goal::where('cnpj', $cnpj)->first();
+
         return Inertia::render('Home/index', [
             "sales" => $sales,
-            "goals" => $goals,
             "associations" => $associations,
             "totalsday" => $totalsday,
             "saleschart" => $saleschart,
