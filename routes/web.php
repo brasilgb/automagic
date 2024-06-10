@@ -26,8 +26,6 @@ Route::middleware(['auth', 'isRoot'])->group(function () {
 
 Route::middleware(['auth', 'isClient'])->group(function () {
     Route::get('/sales', [SaleController::class, 'index'])->name('sales');
-    // Route::get('/filterhome/{df}', [HomeController::class, 'filterHome'])->name('filterhome');
-    Route::post('/filtersale', [SaleController::class, 'filterSale'])->name('filtersale');
 });
 
 Route::middleware('auth')->group(function () {

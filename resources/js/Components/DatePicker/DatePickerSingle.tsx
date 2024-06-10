@@ -4,7 +4,8 @@ import "@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css";
 import moment from "moment";
 import React, { useEffect, useState } from 'react'
 import { CustomLocale } from "./LocaleCalendar";
-import { IoReload } from "react-icons/io5";
+import { IoHome, IoReload } from "react-icons/io5";
+import { Link } from "@inertiajs/react";
 
 type Props = {}
 
@@ -39,6 +40,11 @@ const DatePickerSingle = (props: Props) => {
 
     return (
         <div className="flex">
+            <Link 
+            href={route('dashboard')}
+            className="text-sm p-1 font-bold bg-gray-50 rounded-md shadow-md border border-white text-gray-500 mr-1 cursor-pointer">
+                <IoHome size={22} />
+            </Link>
             <div className="text-sm p-1 font-bold bg-gray-50 rounded-md shadow-md border border-white text-gray-500 mr-1 cursor-pointer">
                 <IoReload size={22} onClick={() => handleSelectedDay()} />
             </div>

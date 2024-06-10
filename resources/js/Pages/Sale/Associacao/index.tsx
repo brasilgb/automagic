@@ -10,17 +10,6 @@ interface AssociationProps {
 }
 
 const Association = ({data}: AssociationProps) => {
-  const { selectedRange, dataInicial, dataFinal } = useAuthContext();
-
-  useEffect(() => {
-    if(selectedRange.to && selectedRange.from){
-      router.post('filtersale', {
-        'dtini': moment(dataInicial).format("YYYYMMDD"),
-        'dtfim': moment(dataFinal).format("YYYYMMDD")
-      })
-      
-    }
-  },[dataInicial, dataFinal, selectedRange]);
 
   return (
     <Table className="bg-megb-blue-secundary rounded-t-md w-full">

@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [dataFinal, setDataFinal] = useState(new Date());
     const [dataFiltro, setDataFiltro] = useState<any>(moment().format("YYYYMMDD"));
     const [executeFilter, setExecuteFilter] = useState<boolean>(false);
+    const [executeRange, setExecuteRange] = useState<boolean>(false);
     const [selectedRange, setSelectedRange] = useState<DayRange>({
         from: {
           year: parseInt(moment(dataInicial).format('YYYY')),
@@ -34,7 +35,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 dataFiltro,
                 setDataFiltro,
                 executeFilter, 
-                setExecuteFilter
+                setExecuteFilter,
+                executeRange, 
+                setExecuteRange
             }}
         >
             {children}
