@@ -18,17 +18,18 @@ class HomeController extends Controller
         $user = Auth::user();
         $compexists = Company::where('id', $user->company_id)->exists();
         // dd($compexists);
-        $cnpj = $compexists ? Company::where('id', $user->company_id)->first()->cnpj : [];
+        $cnpj = $compexists ? Company::where('id', $user->company_id)->first()->cnpj : null;
         $companies = Company::get();
 
         $sales = Sale::when($request->has('dt'), function ($wquery, $cnpj) use ($request) {
-            $wquery->where('cnpj', $cnpj)->where('dtvenda', $request->dt);
-        })->orderBy('id', 'desc')->first();
+            $wquery->where('dtvenda', $request->dt);
+        })->where('cnpj', $cnpj)->orderBy('id', 'desc')->first();
         // dd($sales);
         //$associations = Association::where('cnpj', $cnpj)->first();
         $associations = Association::when($request->has('dt'), function ($wquery, $cnpj) use ($request) {
-            $wquery->where('cnpj', $cnpj)->where('dtvenda', $request->dt);
-        })->orderBy('id', 'desc')->first();
+            $wquery->where('dtvenda', $request->dt);
+        })->where('cnpj', $cnpj)->orderBy('id', 'desc')->first();
+
         //$totalsday = Total::where('cnpj', $cnpj)->first();
         $totalsday = Total::when($request->has('dt'), function ($wquery, $cnpj) use ($request) {
             $wquery->where('cnpj', $cnpj)->where('datatu', $request->dt);
@@ -36,8 +37,8 @@ class HomeController extends Controller
 
         // $saleschart = Sale::where('cnpj', $cnpj)->where('anomes', substr($request->dt, 0, 6))->get();
         $saleschart = Sale::when($request->has('dt'), function ($wquery) use ($request, $cnpj) {
-            $wquery->where('cnpj', $cnpj)->where('anomes', substr($request->dt, 0, 6));
-        })->get();
+            $wquery->where('anomes', substr($request->dt, 0, 6));
+        })->where('cnpj', $cnpj)->get();
 
         return Inertia::render('Home/index', [
             "sales" => $sales,
