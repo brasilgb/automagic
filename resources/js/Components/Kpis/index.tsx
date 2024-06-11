@@ -26,6 +26,14 @@ export const Kpi = (props: KpiTesteProps) => {
           {props.icon}
         </div>
       </div>
+      {/* <div className='px-4 border-t border-gray-200 flex items-center'>
+        <div className='md:text-sm text-xs text-gray-400 flex-1'>
+          Representa
+        </div>
+        <div className='md:text-xl text-xs font-extrabold text-automa-green-primary flex-1'>
+          <h1 className='text-right'>valor%</h1>
+        </div>
+      </div> */}
     </div>
   )
 

@@ -23,14 +23,7 @@ const Sales = ({ sales, association }: any) => {
       <Head title="Vendas" />
       <Card>
         <HeaderContent>
-          <TitleTop>
-            <GiReceiveMoney size={30} />
-            <span className="ml-2">Vendas</span>
-          </TitleTop>
-          <TitleTop />
-        </HeaderContent>
-        <HeaderContent>
-          <div className="flex items-center justify-between gap-6 w-full">
+          <div className="flex items-center justify-auto p-1 bg-automa-green-primary rounded-md shadow-md border border-automa-green-secundary w-full">
             <DatePickerMagic />
             <div className="flex items-center justify-center gap-6 flex-1">
               <AnaliseButton label="Faturamento" onclick={() => setAlteredSales('faturamento')} active={alteredSales === 'faturamento' ? true : false} />

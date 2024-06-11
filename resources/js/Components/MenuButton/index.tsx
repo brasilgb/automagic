@@ -13,9 +13,9 @@ const MenuButton = () => {
     const MHamburger = () => {
         return (
             <div className="h-5 w-5 flex flex-col items-center justify-between">
-                <div className="h-1 w-5 bg-white" />
-                <div className="h-1 w-5 bg-white" />
-                <div className="h-1 w-5 bg-white" />
+                <div className="h-1 w-5 bg-gray-400" />
+                <div className="h-1 w-5 bg-gray-400" />
+                <div className="h-1 w-5 bg-gray-400" />
             </div>
         );
     }
@@ -31,14 +31,14 @@ const MenuButton = () => {
 
     return (
         <>
-            <div className={`absolute w-8 h-8 -top-4 right-0 ${openMenu ? 'bg-white text-gray-700' : 'text-white'} rounded-full flex items-center justify-center z-40`}>
+            <div className={`absolute w-8 h-8 -top-4 right-0 ${openMenu ? 'bg-white text-gray-700' : 'text-white'} rounded-full flex items-center justify-center z-[101]`}>
                 <button
                     onClick={() => handleOpenMenu()}
                 >
                     {openMenu ? <MClose /> : <MHamburger />}
                 </button>
             </div>
-            <div className={`fixed top-12 right-0 bottom-12 left-0 bg-white z-10 transition-transform ${!openMenu ? '-translate-x-full' : '-translate-x-0'}`}>
+            <div className={`fixed top-12 right-0 bottom-0 left-0 bg-white z-10 transition-transform ${!openMenu ? '-translate-x-full' : '-translate-x-0'} z-[101]`}>
                 <SideMenu openSide={openMenu} />
                 <Link
                     href={route('logout')}

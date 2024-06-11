@@ -23,16 +23,16 @@ class HomeController extends Controller
 
         $sales = Sale::when($request->has('dt'), function ($wquery, $cnpj) use ($request) {
             $wquery->where('cnpj', $cnpj)->where('dtvenda', $request->dt);
-        })->first();
+        })->orderBy('id', 'desc')->first();
         // dd($sales);
         //$associations = Association::where('cnpj', $cnpj)->first();
         $associations = Association::when($request->has('dt'), function ($wquery, $cnpj) use ($request) {
             $wquery->where('cnpj', $cnpj)->where('dtvenda', $request->dt);
-        })->first();
+        })->orderBy('id', 'desc')->first();
         //$totalsday = Total::where('cnpj', $cnpj)->first();
         $totalsday = Total::when($request->has('dt'), function ($wquery, $cnpj) use ($request) {
             $wquery->where('cnpj', $cnpj)->where('datatu', $request->dt);
-        })->first();
+        })->orderBy('id', 'desc')->first();
 
         // $saleschart = Sale::where('cnpj', $cnpj)->where('anomes', substr($request->dt, 0, 6))->get();
         $saleschart = Sale::when($request->has('dt'), function ($wquery) use ($request, $cnpj) {

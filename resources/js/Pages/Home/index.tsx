@@ -34,18 +34,9 @@ const Home = ({ companies, sales, totalsday, saleschart }: any) => {
     <AuthenticatedLayout>
       <Head title="Dashboard" />
       <main className=''>
-        <HeaderContent>
-          <TitleTop>
-            <AiOutlineDashboard size={30} />
-            <span className="ml-2">Dashboard</span>
-          </TitleTop>
-          <TitleTop />
-        </HeaderContent>
-
-        <div className="">
           {auth?.user?.company_id !== null &&
             <>
-              <div className="flex items-center justify-start">
+              <div className="flex items-center justify-start p-1 bg-automa-green-primary rounded-md shadow-md border border-automa-green-secundary">
                 <DatePickerSingle />
               </div>
               {totalsday &&
@@ -89,8 +80,6 @@ const Home = ({ companies, sales, totalsday, saleschart }: any) => {
               <Kpi icon={<FaMoneyBillTrendUp size="50" />} iconcolor="text-yellow-700" title="Representa" value={ValuePercent(goals?.faturamento/goals?.valormeta)} bgcolor="bg-green-200" textcolor="text-green-700" /> */}
             </div>
           }
-        </div>
-
       </main>
     </AuthenticatedLayout>
   )
