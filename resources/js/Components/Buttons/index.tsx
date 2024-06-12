@@ -33,7 +33,7 @@ export const AnaliseButton = ({ onclick, label, active }: ButtonsProps) => {
     return (
         <button
             onClick={onclick}
-            className={`px-3 py-1.5 w-48 text-xs uppercase font-bold shadow-md drop-shadow-md border border-white ${active ? 'bg-gray-50 text-automa-green-secundary' : 'bg-automa-green-secundary/0 text-gray-50'} hover:text-automa-green-secundary hover:bg-gray-50 rounded-md transition-colors duration-300`}
+            className={`px-3 py-1.5 w-48 text-xs uppercase font-bold shadow border border-white ${active ? 'text-gray-50 bg-automa-green-secundary' : 'bg-automa-green-primary/60 text-gray-50'} hover:bg-automa-green-secundary hover:text-gray-50 rounded-md transition-colors duration-300`}
         >
             {label}
         </button>

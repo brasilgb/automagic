@@ -17,13 +17,15 @@ export const Kpi = (props: KpiTesteProps) => {
   return (
 
     <div className="flex flex-col bg-gray-50 rounded-md shadow-md border border-white">
-      <div className="flex items-center justify-between p-6">
+      <div className="flex items-center justify-between md:p-6 p-2">
         <div className="flex flex-1 flex-col items-start justify-between">
           <div className="text-base text-gray-400 ">{props.title}</div>
-          <div className="text-xl font-bold text-gray-800 ">{props.value}</div>
+          <div className="md:text-xl text-sm font-bold text-gray-800 ">{props.value}</div>
         </div>
         <div className={`flex items-center justify-center ${props.iconcolor}`}>
+          <IconContext.Provider value={{className:'md:text-4xl text-3xl'}}>
           {props.icon}
+          </IconContext.Provider>
         </div>
       </div>
       {/* <div className='px-4 border-t border-gray-200 flex items-center'>

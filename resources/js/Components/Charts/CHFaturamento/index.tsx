@@ -40,7 +40,7 @@ const CHFaturamento = ({ data }: Props) => {
       inverted: width > 640 ? false : true,
     },
     title: {
-      text: 'Gráfico de Evolução de Vendas',
+      text: `<h1 style='font-size: ${width > 1900 ? '20px' : '14px'}'>Gráfico de Evolução de Vendas</h1>`,
       align: 'left',
     },
     // subtitle: {
@@ -121,9 +121,9 @@ const CHFaturamento = ({ data }: Props) => {
     legend: {
       layout: 'horizontal',
       align: 'left',
-      x: 50,
+      x: 10,
       // verticalAlign: 'top',
-      y: 20,
+      y: 5,
       floating: false,
       backgroundColor: 'rgba(255,255,255,0.25)',
     },

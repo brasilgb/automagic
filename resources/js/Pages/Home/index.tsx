@@ -36,19 +36,19 @@ const Home = ({ companies, sales, totalsday, saleschart }: any) => {
       <main className=''>
           {auth?.user?.company_id !== null &&
             <>
-              <div className="flex items-center justify-start p-1 bg-automa-green-primary rounded-md shadow-md border border-automa-green-secundary">
+              <div className="flex items-center justify-start p-1 bg-automa-green-primary rounded-md md:shadow-md shadow-sm border border-automa-green-secundary">
                 <DatePickerSingle />
               </div>
               {totalsday &&
-                <div className="grid md:gap-4 gap-2 md:grid-cols-4 grid-cols-2 mt-4">
-                  <Kpi icon={<AiOutlineLineChart size="50" />} iconcolor="text-blue-700" title="Meta" value={MoneyptBR(totalsday?.valmeta)} bgcolor="bg-blue-200" textcolor="text-blue-700" />
-                  <Kpi icon={<GiPayMoney size="50" />} iconcolor="text-green-700" title="Faturamento" value={MoneyptBR(totalsday?.valven)} bgcolor="bg-green-200" textcolor="text-green-700" />
-                  <Kpi icon={<FaMoneyBillTrendUp size="50" />} iconcolor="text-yellow-700" title="Val. Juros" value={MoneyptBR(totalsday?.valjur)} bgcolor="bg-green-200" textcolor="text-green-700" />
-                  <Kpi icon={<FaMoneyBillTrendUp size="50" />} iconcolor="text-yellow-700" title="Val. Ina." value={MoneyptBR(totalsday?.valina)} bgcolor="bg-green-200" textcolor="text-green-700" />
+                <div className="grid md:gap-4 gap-2 md:grid-cols-4 grid-cols-2 md:mt-4 mt-2">
+                  <Kpi icon={<AiOutlineLineChart />} iconcolor="text-blue-700" title="Meta" value={MoneyptBR(totalsday?.valmeta)} bgcolor="bg-blue-200" textcolor="text-blue-700" />
+                  <Kpi icon={<GiPayMoney />} iconcolor="text-green-700" title="Faturamento" value={MoneyptBR(totalsday?.valven)} bgcolor="bg-green-200" textcolor="text-green-700" />
+                  <Kpi icon={<FaMoneyBillTrendUp />} iconcolor="text-yellow-700" title="Val. Juros" value={MoneyptBR(totalsday?.valjur)} bgcolor="bg-green-200" textcolor="text-green-700" />
+                  <Kpi icon={<FaMoneyBillTrendUp />} iconcolor="text-yellow-700" title="Val. Ina." value={MoneyptBR(totalsday?.valina)} bgcolor="bg-green-200" textcolor="text-green-700" />
                 </div>
               }
               {totalsday &&
-                <div className="grid gap-4 md:grid-cols-4 grid-cols-2 mt-4">
+                <div className="grid md:gap-4 gap-2 md:grid-cols-4 grid-cols-2 md:mt-4 mt-2">
                   <div className='bg-white p-4 shadow-md rounded-md'>
                     <Progress value={totalsday?.permet} colorBar="#FF5003" colorText="#FF5003" title='Meta' height={100} />
                   </div>
@@ -64,7 +64,7 @@ const Home = ({ companies, sales, totalsday, saleschart }: any) => {
                 </div>
               }
               {saleschart?.length > 0 &&
-                <div className="mt-4 p-2 flex flex-col bg-white rounded-md shadow-md my-4">
+                <div className="md:mt-4 mt-2 p-2 flex flex-col bg-white rounded-md shadow-md">
                   <CHFaturamento data={saleschart} />
                 </div>
               }

@@ -15,6 +15,7 @@ const Faturamento = ({ data }: FaturamentoProps) => {
         <TableRow>
           <TableHead>#</TableHead>
           <TableHead>Data venda</TableHead>
+          <TableHead>Meta</TableHead>
           <TableHead>Venda</TableHead>
           <TableHead>Margem</TableHead>
           <TableHead>Representa</TableHead>
@@ -25,6 +26,7 @@ const Faturamento = ({ data }: FaturamentoProps) => {
           <TableRow className={`${idx % 2 === 0 ? 'bg-gray-50' : 'bg-gray-100'}`}>
             <TableCell>{sale.id}</TableCell>
             <TableCell>{moment(sale.dtvenda).format("DD/MM/YYYY")}</TableCell>
+            <TableCell>{MoneyptBR(sale.valmeta)}</TableCell>
             <TableCell>{MoneyptBR(sale.valvenda)}</TableCell>
             <TableCell>{MoneyptBR(sale.margem)}</TableCell>
             <TableCell>{ValuePercent(sale.representa)}</TableCell>

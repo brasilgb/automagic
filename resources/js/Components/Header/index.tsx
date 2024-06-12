@@ -15,6 +15,9 @@ const Header = () => {
                 <div className="flex-1 md:flex hidden items-center justify-start gap-4">
 
                     <LinkHeader label="Dashboard" url="dashboard" active={route().current('dashboard')} />
+                    {auth?.user?.company_id === null && 
+                        <LinkHeader label="Empresas" active={route().current('companies.*')} url="companies.index" />
+                    }
                     {auth?.user?.company_id !== null &&
                         <LinkHeader label="Faturamento" active={route().current('sales')} url="sales" />
                     }

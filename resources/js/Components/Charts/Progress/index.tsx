@@ -46,7 +46,7 @@ const Progress = ({
       text: '',
     },
     subtitle: {
-      text: `<div style='font-size: 25px; font-weight: bold; color: ${colorText}'>${value.replace('.', ',')}%</div> <span style='font-size: 15px; font-weight: bold;'>${title}</span>`,
+      text: `<div style='font-size: ${sizeWindow > 1900 ? '25px' : '20px'}; font-weight: bold; color: ${colorText}'>${value.replace('.', ',')}%</div> <span style='font-size: ${sizeWindow > 1900 ? '14px' : '12px'}; font-weight: bold;'>${title}</span>`,
       align: 'center',
       verticalAlign: 'middle',
       style: {

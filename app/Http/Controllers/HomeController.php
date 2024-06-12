@@ -32,8 +32,8 @@ class HomeController extends Controller
 
         //$totalsday = Total::where('cnpj', $cnpj)->first();
         $totalsday = Total::when($request->has('dt'), function ($wquery, $cnpj) use ($request) {
-            $wquery->where('cnpj', $cnpj)->where('datatu', $request->dt);
-        })->orderBy('id', 'desc')->first();
+            $wquery->where('datatu', $request->dt);
+        })->where('cnpj', $cnpj)->orderBy('id', 'desc')->first();
 
         // $saleschart = Sale::where('cnpj', $cnpj)->where('anomes', substr($request->dt, 0, 6))->get();
         $saleschart = Sale::when($request->has('dt'), function ($wquery) use ($request, $cnpj) {
