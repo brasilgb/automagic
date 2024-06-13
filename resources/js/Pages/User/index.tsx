@@ -16,7 +16,7 @@ const User = ({ users }: any) => {
     return (
         <AuthenticatedLayout>
             <Head title="Usuários" />
-            <main className='animate__animated animate__fadeIn'>
+            <main className=''>
                 <Card>
                     <HeaderContent>
                         <TitleTop>

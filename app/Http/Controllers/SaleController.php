@@ -27,7 +27,7 @@ class SaleController extends Controller
                 $lastDate = Sale::where('cnpj', $cnpj)->orderBy('dtvenda', 'DESC')->first();
                 if ($lastDate !== null) $wquery->where('dtvenda', $lastDate->dtvenda);
             }
-        )->paginate(5);
+        )->paginate(15);
 
         $association = Association::when(
             $request->has('dt'),
@@ -38,7 +38,7 @@ class SaleController extends Controller
                 $lastDate = Association::where('cnpj', $cnpj)->orderBy('dtvenda', 'DESC')->first();
                 if ($lastDate !== null) $wquery->where('dtvenda', $lastDate->dtvenda);
             }
-        )->paginate(5);
+        )->paginate(15);
 
         $totalsday = Total::when(
             $request->has('dt'),

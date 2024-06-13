@@ -79,7 +79,7 @@ const AddCompany = ({ companies }: any) => {
   return (
     <AuthenticatedLayout>
       <Head title="Dashboard" />
-      <main className='animate__animated animate__fadeIn'>
+      <main className=''>
         <Card>
           <HeaderContent>
             <TitleTop>

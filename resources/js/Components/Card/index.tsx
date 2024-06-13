@@ -10,7 +10,7 @@ export const CardContainer = ({ children, className }: CardProps) => {
 };
 
 export const Card = ({ children, className }: CardProps) => {
-    return <div className={`animate__animated animate__fadeIn ${className}`}>{children}</div>;
+    return <div className={`${className}`}>{children}</div>;
 };
 
 export const CardHeader = ({ children }: CardProps) => {
