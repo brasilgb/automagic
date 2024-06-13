@@ -1,5 +1,6 @@
+import { useAuthContext } from "@/Contexts";
 import { Link } from "@inertiajs/react";
-import React from "react";
+import React, { useEffect } from "react";
 import {
     RiArrowLeftDoubleLine,
     RiArrowLeftSLine,
@@ -8,24 +9,31 @@ import {
 } from "react-icons/ri";
 interface PaginationProps {
     data: any;
+    analise?: any;
 }
 
-const Pagination = ({ data }: PaginationProps) => {
+const Pagination = ({ data, analise }: PaginationProps) => {
+    const {setAlteredAnalise} = useAuthContext();
     const clearLinks = [...data.links];
     clearLinks.shift();
     clearLinks.pop();
+
+    useEffect(() => {
+        setAlteredAnalise(analise);
+    },[analise]);
+
     return (
         <ul className="flex items-center justify-center py-2">
             <li>
                 {data.prev_page_url !== null ? (
                     <Link
-                        className="flex items-center justify-center border border-gray-200 md:h-10 md:w-10 h-6 w-6 md:text-sm text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-600 duration-300"
+                        className="flex items-center justify-center h-8 w-8 md:text-sm text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-600 duration-300"
                         href={data.first_page_url}
                     >
                         <RiArrowLeftSLine size={16} />
                     </Link>
                 ) : (
-                    <span className="flex items-center justify-center border border-gray-200 md:h-10 md:w-10 h-6 w-6 md:text-sm text-xs text-gray-300">
+                    <span className="flex items-center justify-center h-8 w-8 md:text-sm text-xs text-gray-300">
                         <RiArrowLeftSLine size={16} />
                     </span>
                 )}
@@ -33,13 +41,13 @@ const Pagination = ({ data }: PaginationProps) => {
             <li>
                 {data.prev_page_url !== null ? (
                     <Link
-                        className="flex items-center justify-center border-y border-r border-gray-200 md:h-10 md:w-10 h-6 w-6 md:text-sm text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-600 duration-300"
+                        className="flex items-center justify-center  h-8 w-8 md:text-sm text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-600 duration-300"
                         href={data.prev_page_url}
                     >
                         <RiArrowLeftDoubleLine size={16} />
                     </Link>
                 ) : (
-                    <span className="flex items-center justify-center border-y border-r md:h-10 md:w-10 h-6 w-6 md:text-sm text-xs text-gray-300">
+                    <span className="flex items-center justify-center h-8 w-8 md:text-sm text-xs text-gray-300">
                         <RiArrowLeftDoubleLine size={16} />
                     </span>
                 )}
@@ -48,7 +56,7 @@ const Pagination = ({ data }: PaginationProps) => {
             {clearLinks.map((link: any, idx: number) => (
                 <li key={idx}>
                     <Link
-                        className={`flex items-center justify-center border-y border-r border-gray-200 md:h-10 md:w-10 h-6 w-6 md:text-sm text-xs ${link.active ? "text-gray-50 bg-blue-700" : "text-gray-500 hover:bg-gray-100 hover:text-gray-600"} duration-300`}
+                        className={`flex items-center justify-center rounded-full h-8 w-8 md:text-sm text-xs ${link.active ? "text-gray-50 bg-automa-green-terciary" : "text-gray-500 hover:bg-gray-100 hover:text-gray-600"} transition-colors duration-300`}
                         href={link.url}
                     >
                         {link.label}
@@ -59,13 +67,13 @@ const Pagination = ({ data }: PaginationProps) => {
             <li>
                 {data.next_page_url !== null ? (
                     <Link
-                        className="flex items-center justify-center border-y border-r border-gray-200 md:h-10 md:w-10 h-6 w-6 md:text-sm text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-600 duration-300"
+                        className="flex items-center justify-center  h-8 w-8 md:text-sm text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-600 duration-300"
                         href={data.next_page_url}
                     >
                         <RiArrowRightDoubleLine size={16} />
                     </Link>
                 ) : (
-                    <span className="flex items-center justify-center border-y border-r border-gray-200 md:h-10 md:w-10 h-6 w-6 md:text-sm text-xs text-gray-300 duration-300">
+                    <span className="flex items-center justify-center  h-8 w-8 md:text-sm text-xs text-gray-300 duration-300">
                         <RiArrowRightDoubleLine size={16} />
                     </span>
                 )}
@@ -73,13 +81,13 @@ const Pagination = ({ data }: PaginationProps) => {
             <li>
                 {data.next_page_url !== null ? (
                     <Link
-                        className="flex items-center justify-center border-y border-r border-gray-200 md:h-10 md:w-10 h-6 w-6 md:text-sm text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-600 duration-300"
+                        className="flex items-center justify-center  h-8 w-8 md:text-sm text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-600 duration-300"
                         href={data.last_page_url}
                     >
                         <RiArrowRightSLine size={16} />
                     </Link>
                 ) : (
-                    <span className="flex items-center justify-center border-y border-r border-gray-200 md:h-10 md:w-10 h-6 w-6 md:text-sm text-xs text-gray-300 duration-300">
+                    <span className="flex items-center justify-center  h-8 w-8 md:text-sm text-xs text-gray-300 duration-300">
                         <RiArrowRightSLine size={16} />
                     </span>
                 )}

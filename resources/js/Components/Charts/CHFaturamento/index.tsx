@@ -23,9 +23,10 @@ const CHFaturamento = ({ data }: Props) => {
   const colors = Highcharts.getOptions().colors;
 
   const diasemana = data.map((value: any) => moment(value?.dtvenda).format("DD"));
+  const mesano = moment(data[0]?.dtvenda).format("MM/YYYY");
   const margem = data.map((value: any) => parseFloat(value?.margem));
   const meta = data.map((value: any) => parseFloat(value?.valmeta));
-  const vendas = data.map((value: any) => parseFloat(value?.valvenda));
+  const vendas = data.sort((a:any, b:any) => a.id > b.id ? 1 : -1).map((value: any) => parseFloat(value?.valvenda));
 
   Highcharts.setOptions({
     lang: {
@@ -38,9 +39,10 @@ const CHFaturamento = ({ data }: Props) => {
     chart: {
       marginRight: 0,
       inverted: width > 640 ? false : true,
+      height: width > 640 ? "385px" : "400px"
     },
     title: {
-      text: `<h1 style='font-size: ${width > 1900 ? '20px' : '14px'}'>Gráfico de Evolução de Vendas</h1>`,
+      text: `<h1 style='font-size: ${width > 1900 ? '20px' : '14px'}'>Gráfico de Evolução de Vendas (${mesano})</h1>`,
       align: 'left',
     },
     // subtitle: {

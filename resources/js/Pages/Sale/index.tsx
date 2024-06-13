@@ -9,14 +9,23 @@ import Faturamento from "./Faturamento"
 import { AnaliseButton } from "@/Components/Buttons"
 import Associacao from "./Associacao"
 import DatePickerMagic from "@/Components/DatePicker"
-import { IoSearch } from "react-icons/io5"
+import { IoInformationCircle } from "react-icons/io5"
+import DatePickerSingle from "@/Components/DatePicker/DatePickerSingle"
 import { useAuthContext } from "@/Contexts"
 
-const Sales = ({ sales, association }: any) => {
-  const [alteredSales, setAlteredSales] = useState('faturamento');
+const Sales = ({ sales, association, totalsday }: any) => {
+  const { dataFiltro, executeFilter, setExecuteFilter, alteredAnalise, setAlteredAnalise } = useAuthContext();
 
-  const dateAssoc = association?.data;
-  const dateSales = sales?.data;
+  useEffect(() => {
+    const getDataHome = () => {
+      if (executeFilter) {
+        router.get('/sales',
+          { 'dt': moment(dataFiltro).format('YYYYMMDD') })
+      }
+      setExecuteFilter(false);
+    };
+    getDataHome();
+  }, [dataFiltro, executeFilter]);
 
   return (
     <AuthenticatedLayout>
@@ -25,21 +34,21 @@ const Sales = ({ sales, association }: any) => {
         <HeaderContent>
           <div className="flex flex-col w-full">
             <div className="flex md:flex-row flex-col gap-2 items-center justify-auto p-1 bg-automa-green-primary rounded-md shadow-md border border-automa-green-secundary w-full">
-              <DatePickerMagic />
+              <DatePickerSingle url="sales" />
             </div>
             <div className="flex md:items-center items-start justify-start md:flex-1 p-2 md:gap-6 gap-2 w-full overflow-x-auto bg-gray-100 mt-2 rounded-md shadow">
-              <AnaliseButton label="Faturamento" onclick={() => setAlteredSales('faturamento')} active={alteredSales === 'faturamento' ? true : false} />
-              <AnaliseButton label="Associação" onclick={() => setAlteredSales('associacao')} active={alteredSales === 'associacao' ? true : false} />
+              <AnaliseButton label="Faturamento" onclick={() => setAlteredAnalise('faturamento')} active={alteredAnalise === 'faturamento' ? true : false} />
+              <AnaliseButton label="Associação" onclick={() => setAlteredAnalise('associacao')} active={alteredAnalise === 'associacao' ? true : false} />
             </div>
           </div>
 
         </HeaderContent>
         <CardBody className="rounded-md p-1">
-          {alteredSales === 'faturamento' &&
-            <Faturamento data={dateSales} />
+          {alteredAnalise === 'faturamento' &&
+            <Faturamento data={sales} totals={totalsday} />
           }
-          {alteredSales === 'associacao' &&
-            <Associacao data={dateAssoc} />
+          {alteredAnalise === 'associacao' &&
+            <Associacao data={association} />
           }
         </CardBody>
       </Card>

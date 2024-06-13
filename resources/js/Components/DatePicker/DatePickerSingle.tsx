@@ -7,9 +7,11 @@ import { CustomLocale } from "./LocaleCalendar";
 import { IoHome, IoReload } from "react-icons/io5";
 import { Link } from "@inertiajs/react";
 
-type Props = {}
+interface DatePickerProps {
+    url: string;
+}
 
-const DatePickerSingle = (props: Props) => {
+const DatePickerSingle = (props: DatePickerProps) => {
     const {
         setDataFiltro,
         setExecuteFilter,
@@ -41,7 +43,7 @@ const DatePickerSingle = (props: Props) => {
     return (
         <div className="flex">
             <Link 
-            href={route('dashboard')}
+            href={route(`${props.url}`)}
             className="text-sm p-1 font-bold bg-gray-50 rounded-md shadow-md border border-white text-gray-500 mr-1 cursor-pointer">
                 <IoHome size={22} />
             </Link>

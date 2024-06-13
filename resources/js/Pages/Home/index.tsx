@@ -13,9 +13,10 @@ import DatePickerSingle from "@/Components/DatePicker/DatePickerSingle";
 import { useEffect } from 'react';
 import { useAuthContext } from '@/Contexts';
 import moment from 'moment';
+import { IoInformationCircle } from "react-icons/io5";
 
 
-const Home = ({ companies, sales, totalsday, saleschart }: any) => {
+const Home = ({ companies, totalsday, saleschart }: any) => {
   const { auth } = usePage().props as any;
   const { dataFiltro, executeFilter, setExecuteFilter } = useAuthContext();
 
@@ -37,8 +38,13 @@ const Home = ({ companies, sales, totalsday, saleschart }: any) => {
           {auth?.user?.company_id !== null &&
             <>
               <div className="flex items-center justify-start p-1 bg-automa-green-primary rounded-md md:shadow-md shadow-sm border border-automa-green-secundary">
-                <DatePickerSingle />
+                <DatePickerSingle url="dashboard" />
               </div>
+              {!totalsday &&
+              <div className="bg-cyan-600 text-white flex items-center justify-start rounded-md shadow-sm md:mt-4 mt-2 py-2 px-3">
+                <IoInformationCircle size={25} /><span className="text-sm ml-2">Não há dados a serem mostrados no momento</span>
+              </div>
+              }
               {totalsday &&
                 <div className="grid md:gap-4 gap-2 md:grid-cols-4 grid-cols-2 md:mt-4 mt-2">
                   <Kpi icon={<AiOutlineLineChart />} iconcolor="text-blue-700" title="Meta" value={MoneyptBR(totalsday?.valmeta)} bgcolor="bg-blue-200" textcolor="text-blue-700" />
